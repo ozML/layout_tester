@@ -1,0 +1,380 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:layout_tester/layout_tester.dart';
+
+void main() {
+  const traitId = 'TEST';
+  const targetId = TargetId(type: Container);
+  const bounds = Rect.fromLTWH(10, 10, 10, 10);
+  final widget = Container();
+  final tester = LayoutTester(MockWidgetTester());
+
+  group('LayoutTester -', () {
+    testWidgets('testLayout', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Row(
+            children: [
+              const Expanded(
+                child: Center(
+                  child: SizedBox(
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(child: Container()),
+                    const Expanded(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+
+      final layoutTester = LayoutTester(tester);
+
+      layoutTester.testLayout({
+        WidgetTrait(
+          targetId: const TargetId(type: Expanded, elementIndex: 0),
+          asserts: const [
+            SizeAssert.WH(400, 600),
+            PositionAssert.LTRB(0, 0, 400, 600),
+          ],
+          descendants: [
+            WidgetTrait(
+              id: 'leftBox',
+              targetId: const TargetId(type: SizedBox),
+              asserts: const [
+                SizeAssert.WH(100, 100),
+                PositionAssert.LTRB(150, 250, 250, 350),
+                RelativeSizeAssert(
+                  traitId: 'rightBox',
+                  percentageWidth: 2,
+                  percentageHeight: 2,
+                ),
+              ],
+            )
+          ],
+        ),
+        WidgetTrait(
+          id: 'rightExpanded',
+          targetId: const TargetId(type: Expanded, elementIndex: 1),
+          asserts: const [
+            SizeAssert.WH(400, 600),
+            PositionAssert.LTRB(400, 0, 800, 600),
+          ],
+          descendants: [
+            WidgetTrait(
+              id: 'rightBox',
+              targetId: const TargetId(type: SizedBox),
+              asserts: const [
+                SizeAssert.WH(50, 50),
+                PositionAssert.LTRB(400, 425, 450, 475),
+                RelativeSizeAssert(
+                  traitId: 'leftBox',
+                  percentageWidth: 0.5,
+                  percentageHeight: 0.5,
+                ),
+                RelativePositionAssert.within(
+                  traitId: 'rightExpanded',
+                  left: 0,
+                  top: 425,
+                  right: 50,
+                  bottom: 475,
+                ),
+                RelativePositionAssert.relativeTo(
+                  traitId: 'leftBox',
+                  leftDistance: 150,
+                ),
+              ],
+            ),
+            WidgetTrait(
+              targetId: TargetId.custom((widget) => widget is Container),
+              asserts: const [
+                SizeAssert.WH(400, 300),
+                PositionAssert.LTRB(400, 0, 800, 300),
+              ],
+            )
+          ],
+        ),
+      });
+    });
+
+    test('testPosition', () {
+      /// Valid
+      expect(
+        () => tester.testPosition(
+          targetId,
+          widget,
+          bounds,
+          const PositionAssert(left: 10, top: 10, right: 20, bottom: 20),
+        ),
+        returnsNormally,
+      );
+
+      // Invalid
+      expect(
+        () => tester.testPosition(
+          targetId,
+          widget,
+          bounds,
+          const PositionAssert(left: 0, top: 10, right: 20, bottom: 20),
+        ),
+        throwsException,
+      );
+      expect(
+        () => tester.testPosition(
+          targetId,
+          widget,
+          bounds,
+          const PositionAssert(left: 10, top: 0, right: 20, bottom: 20),
+        ),
+        throwsException,
+      );
+      expect(
+        () => tester.testPosition(
+          targetId,
+          widget,
+          bounds,
+          const PositionAssert(left: 10, top: 10, right: 0, bottom: 20),
+        ),
+        throwsException,
+      );
+      expect(
+        () => tester.testPosition(
+          targetId,
+          widget,
+          bounds,
+          const PositionAssert(left: 10, top: 10, right: 20, bottom: 0),
+        ),
+        throwsException,
+      );
+    });
+
+    test('testSize', () {
+      /// Valid
+      expect(
+        () => tester.testSize(
+          targetId,
+          widget,
+          bounds.size,
+          const SizeAssert(width: 10, height: 10),
+        ),
+        returnsNormally,
+      );
+
+      /// Valid
+      expect(
+        () => tester.testSize(
+          targetId,
+          widget,
+          bounds.size,
+          const SizeAssert(width: 0, height: 10),
+        ),
+        throwsException,
+      );
+      expect(
+        () => tester.testSize(
+          targetId,
+          widget,
+          bounds.size,
+          const SizeAssert(width: 10, height: 0),
+        ),
+        throwsException,
+      );
+    });
+
+    group('testRelativePosition -', () {
+      const translate = 40.0;
+
+      // Valid
+      for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+          test(' pos ($dx, $dy)', () {
+            final ref = bounds.translate(dx * translate, dy * translate);
+
+            double? leftFrom;
+            double? rightFrom;
+            if (dx != 0) {
+              if (dx > 0) {
+                leftFrom = ref.left - bounds.right;
+              } else {
+                rightFrom = bounds.left - ref.right;
+              }
+            }
+
+            double? topFrom;
+            double? bottomFrom;
+            if (dy != 0) {
+              if (dy > 0) {
+                topFrom = ref.top - bounds.bottom;
+              } else {
+                bottomFrom = bounds.top - ref.bottom;
+              }
+            }
+
+            // valid
+            expect(
+              () => tester.testRelativePosition(
+                targetId,
+                widget,
+                bounds,
+                ref,
+                RelativePositionAssert.relativeTo(
+                  traitId: traitId,
+                  rightDistance: leftFrom,
+                  bottomDistance: topFrom,
+                  leftDistance: rightFrom,
+                  topDistance: bottomFrom,
+                ),
+              ),
+              returnsNormally,
+            );
+          });
+        }
+      }
+
+      // Invalid
+      test('Invalid', () {
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            widget,
+            bounds,
+            bounds,
+            const RelativePositionAssert.relativeTo(
+              traitId: traitId,
+              rightDistance: 10,
+            ),
+          ),
+          throwsException,
+        );
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            widget,
+            bounds,
+            bounds,
+            const RelativePositionAssert.relativeTo(
+              traitId: traitId,
+              bottomDistance: 10,
+            ),
+          ),
+          throwsException,
+        );
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            widget,
+            bounds,
+            bounds,
+            const RelativePositionAssert.relativeTo(
+              traitId: traitId,
+              leftDistance: 10,
+            ),
+          ),
+          throwsException,
+        );
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            widget,
+            bounds,
+            bounds,
+            const RelativePositionAssert.relativeTo(
+              traitId: traitId,
+              topDistance: 10,
+            ),
+          ),
+          throwsException,
+        );
+      });
+    });
+
+    test('testRelativeSize', () {
+      // Valid
+      expect(
+        () => tester.testRelativeSize(
+          targetId,
+          widget,
+          const Size(50, 50),
+          const Size(25, 100),
+          const RelativeSizeAssert(
+            traitId: traitId,
+            percentageWidth: 2,
+            percentageHeight: 0.5,
+          ),
+        ),
+        returnsNormally,
+      );
+
+      // Invalid
+      expect(
+        () => tester.testRelativeSize(
+          targetId,
+          widget,
+          const Size(50, 50),
+          const Size(25, 100),
+          const RelativeSizeAssert(
+            traitId: traitId,
+            percentageWidth: 1,
+          ),
+        ),
+        throwsException,
+      );
+      expect(
+        () => tester.testRelativeSize(
+          targetId,
+          widget,
+          const Size(50, 50),
+          const Size(25, 100),
+          const RelativeSizeAssert(
+            traitId: traitId,
+            percentageHeight: 1,
+          ),
+        ),
+        throwsException,
+      );
+    });
+  });
+}
+
+class MockWidgetTester implements WidgetTester {
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class TestCustomTraitAssert extends CustomTraitAssert {
+  TestCustomTraitAssert(this.testAction);
+
+  final void Function(
+    WidgetTrait trait,
+    Rect bounds,
+    Size screenSize,
+    WidgetTrait? compareTrait,
+    Rect? compareBounds,
+  ) testAction;
+
+  @override
+  void test(
+    WidgetTrait trait,
+    Rect bounds,
+    Size screenSize, [
+    WidgetTrait? compareTrait,
+    Rect? compareBounds,
+  ]) =>
+      testAction(trait, bounds, screenSize, compareTrait, compareBounds);
+}
