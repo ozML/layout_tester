@@ -1,6 +1,18 @@
 This helper package provides an easy interface for layout and widget composition testing. This is done by composing a set of assertions for specific layout criteria, which are subject of the tests. These are represented by corresponding meta data objects. The resulting test meta data structure can be modeled as a tree and resembles as such a widget tree.
 
-It is build atop of *flutter_test* `WidgetTester` and is therefore  meant to be used only in context of widget tests.
+## Installing
+
+It is build atop of `WidgetTester` from the *flutter_test* SDK package and is therefore  meant to be used only in context of widget tests.
+
+**The package has therefor to be added as dev dependency.**
+
+```console
+ $ flutter pub add --dev layout_tester
+```
+
+For general information about testing see
+- [Testing Flutter apps](https://docs.flutter.dev/testing)
+- [Widget tests](https://docs.flutter.dev/testing#widget-tests) 
 
 # Overview
 
@@ -16,9 +28,7 @@ class LayoutTester {
 
 - `WidgetTrait`
 
-    Describes a specific element in the widget tree. This `target` element is identified by an identifier in form of `TargetId` which is mandatory. A trait can also be set as a descendant of another trait. This way the hierarchical structure can be concretized and therefore the set of potential search results narrowed down. The tester uses all this information and tries to find the described element within the widget tree.
-
-    In addition to the described purpose of search criteria definition, the widget trait is also used to specify the criteria for the layout tests, which are then applied on the target widget. These criteria can be specified with the asserts property.
+    Represents a specific widget in the widget tree, which is identified by the `targetId` property and when needed also specifies the hierarchical position of it in the widget tree. In addition it is also used to define assertions for the target element. All these criteria are used by the `LayoutTester` to perform tests on this element.
 
 - `TargetId`
 
@@ -96,7 +106,8 @@ testWidgets('example', (tester) async {
                                     // Element 5 has to be dimension 50x50.
                                     SizeAssert.WH(50, 50),
 
-                                    // Element 5 has to be the 0.1 of the size of element 'e1' (Element 1).
+                                    // Element 5 has to be the 0.1 of the size of
+                                    // element 'e1' (Element 1).
                                     RelativeSizeAssert(
                                         traitId: 'e2',
                                         percentageWidth: 0.1,
@@ -138,7 +149,8 @@ testLayout(
                 // Element 5 has to be dimension 50x50.
                 SizeAssert.WH(50, 50),
                 
-                // Element 5 has to be the 0.1 of the size of element'e1' (Element 1).
+                // Element 5 has to be the 0.1 of the size of
+                // element'e1' (Element 1).
                 const RelativeSizeAssert(
                     traitId: 'e2',
                     percentageWidth: 0.1,

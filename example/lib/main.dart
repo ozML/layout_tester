@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+//============================================================
+// NOTE:
+// Relevant test example is located in 'test/widget_test.dart'
+// file of this example project.
+//============================================================
+
 void main() {
   runApp(const MyApp());
 }
