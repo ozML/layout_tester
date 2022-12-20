@@ -1,4 +1,8 @@
-This helper package provides an easy interface for layout and widget composition testing. This is done by composing a set of assertions for specific layout criteria, which are subject of the tests. These are represented by corresponding meta data objects. The resulting test meta data structure can be modeled as a tree and resembles as such a widget tree.
+![Tests](https://github.com/ozML/layout_tester/actions/workflows/test.yml/badge.svg)
+
+This helper package provides an easy interface for layout and widget composition testing.
+
+This is done by composing a set of assertions for specific layout criteria, which are subject of the tests. These are represented by corresponding meta data objects. The resulting test meta data structure can be modeled as a tree and resembles as such a widget tree.
 
 ## Installing
 
