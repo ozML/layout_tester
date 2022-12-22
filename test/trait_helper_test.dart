@@ -222,6 +222,8 @@ void main() {
       );
 
       // Non ancestor
+
+      // Other root
       expect(
         TraitHelper.findAncestorOf(trait, ancestorId: '2'),
         isNull,
@@ -236,6 +238,26 @@ void main() {
       // Unknown
       expect(
         TraitHelper.findAncestorOf(trait, ancestorId: 'x'),
+        isNull,
+      );
+
+      // From root ancestor
+
+      final rootAncestor = rootTraits[1];
+
+      // Self
+      expect(
+        TraitHelper.findAncestorOf(rootAncestor, ancestorId: '1'),
+        isNull,
+      );
+      // Descendant
+      expect(
+        TraitHelper.findAncestorOf(rootAncestor, ancestorId: '1.0'),
+        isNull,
+      );
+      // Other root descendant
+      expect(
+        TraitHelper.findAncestorOf(rootAncestor, ancestorId: '2.0'),
         isNull,
       );
     });
@@ -258,23 +280,34 @@ void main() {
     });
 
     test('findDescendantOf', () {
-      final trait = rootTraits[1];
+      final trait = rootTraits[1].descendants[0];
 
       // Descendant
       expect(
-        TraitHelper.findDescendantOf(trait, descendantId: '1.1.0.0'),
+        TraitHelper.findDescendantOf(trait, descendantId: '1.0.0'),
         isNotNull,
       );
 
-      // Non ancestor
+      // Non descendant
+
+      // Root ancestor
+      expect(
+        TraitHelper.findDescendantOf(trait, descendantId: '1'),
+        isNull,
+      );
+      // Other root
       expect(
         TraitHelper.findDescendantOf(trait, descendantId: '2'),
         isNull,
       );
-
+      // Other root descendant
+      expect(
+        TraitHelper.findDescendantOf(trait, descendantId: '2.0'),
+        isNull,
+      );
       // Self
       expect(
-        TraitHelper.findDescendantOf(trait, descendantId: '1'),
+        TraitHelper.findDescendantOf(trait, descendantId: '1.0'),
         isNull,
       );
 
@@ -286,9 +319,11 @@ void main() {
     });
 
     test('findUnrelated', () {
-      final trait = rootTraits[1].descendants[0].descendants[0];
+      final trait = rootTraits[1].descendants[0];
 
       // Related
+
+      // Root parent
       expect(
         TraitHelper.findUnrelated(
           trait,
@@ -297,6 +332,25 @@ void main() {
         ),
         isNull,
       );
+      // Sibling
+      expect(
+        TraitHelper.findUnrelated(
+          trait,
+          traitId: '1.1',
+          rootTraits: rootTraits,
+        ),
+        isNull,
+      );
+      // Self
+      expect(
+        TraitHelper.findUnrelated(
+          trait,
+          traitId: '1.0',
+          rootTraits: rootTraits,
+        ),
+        isNull,
+      );
+      // Descendant
       expect(
         TraitHelper.findUnrelated(
           trait,
@@ -307,6 +361,17 @@ void main() {
       );
 
       // Unrelated
+
+      // Other root
+      expect(
+        TraitHelper.findUnrelated(
+          trait,
+          traitId: '2',
+          rootTraits: rootTraits,
+        ),
+        isNotNull,
+      );
+      // Other root descendant
       expect(
         TraitHelper.findUnrelated(
           trait,
@@ -316,27 +381,51 @@ void main() {
         isNotNull,
       );
 
-      // Self
-      expect(
-        TraitHelper.findUnrelated(
-          trait,
-          traitId: '1.0.0',
-          rootTraits: rootTraits,
-        ),
-        isNull,
-      );
-
       // Unknown
       expect(
         TraitHelper.findUnrelated(trait, traitId: 'x', rootTraits: rootTraits),
         isNull,
       );
+
+      // From root ancestor
+
+      final rootAncestor = rootTraits[1];
+
+      // Self
+      expect(
+        TraitHelper.findUnrelated(
+          rootAncestor,
+          traitId: '1',
+          rootTraits: rootTraits,
+        ),
+        isNull,
+      );
+      // Descendant
+      expect(
+        TraitHelper.findUnrelated(
+          rootAncestor,
+          traitId: '1.0',
+          rootTraits: rootTraits,
+        ),
+        isNull,
+      );
+      // Other root descendant
+      expect(
+        TraitHelper.findUnrelated(
+          rootAncestor,
+          traitId: '2.0',
+          rootTraits: rootTraits,
+        ),
+        isNotNull,
+      );
     });
 
     test('findNonIntersecting', () {
-      final trait = rootTraits[1].descendants[0].descendants[0];
+      final trait = rootTraits[1].descendants[0];
 
       // Intersecting
+
+      // Root ancestor
       expect(
         TraitHelper.findNonIntersecting(
           trait,
@@ -345,8 +434,28 @@ void main() {
         ),
         isNull,
       );
+      // Descendant
+      expect(
+        TraitHelper.findNonIntersecting(
+          trait,
+          traitId: '1.0.0',
+          rootTraits: rootTraits,
+        ),
+        isNull,
+      );
+      // Self
+      expect(
+        TraitHelper.findNonIntersecting(
+          trait,
+          traitId: '1.0',
+          rootTraits: rootTraits,
+        ),
+        isNull,
+      );
 
       // Non intersecting
+
+      // Far sibling
       expect(
         TraitHelper.findNonIntersecting(
           trait,
@@ -355,6 +464,16 @@ void main() {
         ),
         isNotNull,
       );
+      // Other root
+      expect(
+        TraitHelper.findNonIntersecting(
+          trait,
+          traitId: '2',
+          rootTraits: rootTraits,
+        ),
+        isNotNull,
+      );
+      // Other root descendant
       expect(
         TraitHelper.findNonIntersecting(
           trait,
@@ -362,16 +481,6 @@ void main() {
           rootTraits: rootTraits,
         ),
         isNotNull,
-      );
-
-      // Self
-      expect(
-        TraitHelper.findNonIntersecting(
-          trait,
-          traitId: '1.0.0',
-          rootTraits: rootTraits,
-        ),
-        isNull,
       );
 
       // Unknown

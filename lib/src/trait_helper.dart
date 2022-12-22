@@ -124,9 +124,13 @@ class TraitHelper {
     required String traitId,
     required List<WidgetTrait> rootTraits,
   }) {
-    final rootTrait = findRootAncestorOf(trait);
+    final rootTrait = findRootAncestorOf(trait) ?? trait;
     for (final element in rootTraits) {
-      if (element.id != (rootTrait?.id ?? trait.id)) {
+      if (element.id != rootTrait.id) {
+        if (element.id == traitId) {
+          return element;
+        }
+
         final result = findDescendantOf(element, descendantId: traitId);
         if (result != null) {
           return result;
@@ -152,29 +156,27 @@ class TraitHelper {
     required String traitId,
     required List<WidgetTrait> rootTraits,
   }) {
+    WidgetTrait previousTrait = trait;
     WidgetTrait? currentTrait = trait.parent;
 
     /// Search related in non-direct line.
     while (currentTrait != null) {
-      final parent = currentTrait.parent;
-      if (parent != null) {
-        for (final descendant in parent.descendants) {
-          if (descendant.id != currentTrait.id) {
-            final result = findDescendantOf(descendant, descendantId: traitId);
-            if (result != null) {
-              return result;
-            }
+      for (final descendant in currentTrait.descendants) {
+        if (descendant.id != previousTrait.id) {
+          final result = findDescendantOf(descendant, descendantId: traitId);
+          if (result != null) {
+            return result;
           }
         }
-        currentTrait = parent;
-      } else {
-        break;
       }
+      previousTrait = currentTrait;
+      currentTrait = currentTrait.parent;
     }
 
     /// Search unrelated.
+    final rootAncestor = findRootAncestorOf(trait);
     for (final rootTrait in rootTraits) {
-      if (rootTrait.id != (currentTrait?.id ?? trait.id)) {
+      if (rootTrait.id != (rootAncestor?.id ?? trait.id)) {
         if (rootTrait.id == traitId) {
           return rootTrait;
         }
