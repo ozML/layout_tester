@@ -1,6 +1,6 @@
 name: layout_tester
-description: Flutter layout testing utility
-version: 0.0.1
+description: This helper package provides an easy interface for layout and widget composition testing. 
+version: 0.0.1+1
 homepage: https://github.com/ozML/layout_tester
 
 environment:
