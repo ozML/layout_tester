@@ -72,6 +72,9 @@ class AssertionFailedException extends LayoutTesterException {
         );
 
   /// Creates an instance of [AssertionFailedException] for position failure.
+  ///
+  /// Expects [DoublePair] objects for the different property details, where
+  /// `value1` corresponds to the actual value and `value2` to the expected.
   AssertionFailedException.forPosition({
     required TargetId targetId,
     DoublePair? left,
@@ -90,6 +93,9 @@ class AssertionFailedException extends LayoutTesterException {
         );
 
   /// Creates an instance of [AssertionFailedException] for size failure.
+  ///
+  /// Expects [DoublePair] objects for the different property details, where
+  /// `value1` corresponds to the actual value and `value2` to the expected.
   AssertionFailedException.forSize({
     required TargetId targetId,
     DoublePair? width,
@@ -105,6 +111,9 @@ class AssertionFailedException extends LayoutTesterException {
 
   /// Creates an instance of [AssertionFailedException] for relative position
   /// failure.
+  ///
+  /// Expects [DoublePair] objects for the different property details, where
+  /// `value1` corresponds to the actual value and `value2` to the expected.
   AssertionFailedException.forRelativePosition({
     required TargetId targetId,
     DoublePair? leftDistance,
@@ -129,6 +138,9 @@ class AssertionFailedException extends LayoutTesterException {
 
   /// Creates an instance of [AssertionFailedException] for relative size
   /// failure.
+  ///
+  /// Expects [DoublePair] objects for the different property details, where
+  /// `value1` corresponds to the actual value and `value2` to the expected.
   AssertionFailedException.forRelativeSize({
     required TargetId targetId,
     DoublePair? pWidth,

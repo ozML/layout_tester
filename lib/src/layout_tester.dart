@@ -42,7 +42,7 @@ class LayoutTester {
       final position = trait.asserts
           .whereType<PositionAssert>()
           .where((element) => element is! RelativePositionAssert)
-          .singleOrNone;
+          .singleOrEmpty;
       if (position != null) {
         testPosition(trait.targetId, target, bounds, position);
       }
@@ -50,7 +50,7 @@ class LayoutTester {
       final size = trait.asserts
           .whereType<SizeAssert>()
           .where((element) => element is! RelativeSizeAssert)
-          .singleOrNone;
+          .singleOrEmpty;
       if (size != null) {
         testSize(trait.targetId, target, bounds.size, size);
       }
