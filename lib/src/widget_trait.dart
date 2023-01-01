@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
+import 'package:layout_tester/src/extensions.dart';
 
-import 'trait_assert.dart';
+import 'trait_assert/assert.dart';
 
 /// Used to identify a specific widget.
 typedef WidgetLocator = bool Function(Widget widget);
@@ -88,6 +89,15 @@ class WidgetTrait with EquatableMixin {
     this.asserts = const [],
     List<WidgetTrait> descendants = const [],
   }) : _id = id ?? "#${++_idCounter}" {
+    assert(
+      asserts.hasSingleOrNone((element) => element is PositionAssert),
+      'Trait can only have a single position assert.',
+    );
+    assert(
+      asserts.hasSingleOrNone((element) => element is SizeAssert),
+      'Trait can only have a single size assert.',
+    );
+
     this.descendants = descendants
         .map((e) => WidgetTrait._(
               targetId: e.targetId,
@@ -175,3 +185,21 @@ class WidgetTrait with EquatableMixin {
   @override
   List<Object?> get props => [targetId, id];
 }
+
+/// Creates an instance of [WidgetTrait] with a target of type [T].
+///
+/// A [TargetId] is created for the generated trait, with [T] as target type.
+/// Additionally [key] and [elementIndex] are added to it, if provided.
+WidgetTrait qualifyTarget<T extends Widget>({
+  Key? key,
+  String? id,
+  int? elementIndex,
+  List<TraitAssert> asserts = const [],
+  List<WidgetTrait> descendants = const [],
+}) =>
+    WidgetTrait(
+      id: id,
+      targetId: TargetId(type: T, key: key, elementIndex: elementIndex),
+      asserts: asserts,
+      descendants: descendants,
+    );

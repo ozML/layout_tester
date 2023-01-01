@@ -267,7 +267,7 @@ testLayout(
         WidgetTrait(
             targetId: const TargetId(type: Text),
             asserts: [
-                RlativePositionAssert(
+                RelativePositionAssert(
                     traitId: 'trait0',
                     leftDistance: 25,
                 )

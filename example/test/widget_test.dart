@@ -29,10 +29,7 @@ void main() {
         asserts: const [
           SizeAssert.WH(56, 56),
           PositionAssert(left: 728, top: 528),
-          RelativePositionAssert.relativeTo(
-            traitId: 'appbar',
-            topDistance: 472,
-          ),
+          RelativePositionAssert.target(traitId: 'appbar', top: 472),
         ],
       )
     });

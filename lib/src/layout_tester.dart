@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart' as ft;
 import 'extensions.dart';
 import 'value_pair.dart';
 import 'exceptions.dart';
-import 'trait_assert.dart';
+import 'trait_assert/assert.dart';
 import 'widget_trait.dart';
 import 'utils.dart';
 import 'trait_helper.dart';
@@ -39,78 +39,85 @@ class LayoutTester {
       final target = TraitHelper.getTarget(trait, tester: tester);
       final bounds = tester.getRect(ft.find.byWidget(target));
 
-      final position = trait.asserts
-          .whereType<PositionAssert>()
-          .where((element) => element is! RelativePositionAssert)
-          .singleOrEmpty;
+      final position = trait.asserts.whereType<PositionAssert>().singleOrEmpty;
       if (position != null) {
-        testPosition(trait.targetId, target, bounds, position);
+        testPosition(trait.targetId, bounds, position);
       }
 
-      final size = trait.asserts
-          .whereType<SizeAssert>()
-          .where((element) => element is! RelativeSizeAssert)
-          .singleOrEmpty;
+      final size = trait.asserts.whereType<SizeAssert>().singleOrEmpty;
       if (size != null) {
-        testSize(trait.targetId, target, bounds.size, size);
+        testSize(trait.targetId, bounds.size, size);
       }
 
       for (final tAssert in trait.asserts) {
         if (tAssert is RelativePositionAssert) {
           if (atLeastOne(tAssert.getLTRB())) {
-            final ancestor = TraitHelper.findAncestorOf(
-              trait,
-              ancestorId: tAssert.traitId,
-            );
-            if (ancestor == null) {
-              throw UnknowWidgetTraitException.forAncestor(
-                trait.id,
+            if (tAssert.refersTo == PositionReference.target) {
+              final compareTrait = TraitHelper.findNonIntersecting(
+                trait,
+                traitId: tAssert.traitId,
+                rootTraits: rootTraits,
+              );
+              if (compareTrait == null) {
+                throw UnknowWidgetTraitException(traitId: trait.id);
+              }
+
+              final compareTarget = TraitHelper.getTarget(
+                compareTrait,
+                tester: tester,
+              );
+              final compareBounds = tester.getRect(
+                ft.find.byWidget(compareTarget),
+              );
+
+              testRelativePosition(
+                trait.targetId,
+                bounds,
+                compareBounds,
+                tAssert,
+              );
+            } else if (tAssert.refersTo == PositionReference.parent ||
+                tAssert.refersTo == PositionReference.parentBounds) {
+              final ancestor = TraitHelper.findAncestorOf(
+                trait,
                 ancestorId: tAssert.traitId,
               );
+              if (ancestor == null) {
+                throw UnknowWidgetTraitException.forAncestor(
+                  trait.id,
+                  ancestorId: tAssert.traitId,
+                );
+              }
+
+              final ancestorTarget = TraitHelper.getTarget(
+                ancestor,
+                tester: tester,
+              );
+              final ancestorBounds = tester.getRect(
+                ft.find.byWidget(ancestorTarget),
+              );
+              final relativeBounds = Rect.fromLTWH(
+                bounds.left - ancestorBounds.left,
+                bounds.top - ancestorBounds.top,
+                bounds.width,
+                bounds.height,
+              );
+
+              // testPosition(trait.targetId, target, relativeBounds, tAssert);
+              testRelativePosition(
+                trait.targetId,
+                relativeBounds,
+                ancestorBounds,
+                tAssert,
+              );
+            } else if (tAssert.refersTo == PositionReference.globalBounds) {
+              testRelativePosition(
+                trait.targetId,
+                bounds,
+                Offset.zero & getScreenSize(),
+                tAssert,
+              );
             }
-
-            final ancestorTarget = TraitHelper.getTarget(
-              ancestor,
-              tester: tester,
-            );
-            final ancestorBounds = tester.getRect(
-              ft.find.byWidget(ancestorTarget),
-            );
-            final relativeBounds = Rect.fromLTWH(
-              bounds.left - ancestorBounds.left,
-              bounds.top - ancestorBounds.top,
-              bounds.width,
-              bounds.height,
-            );
-
-            testPosition(trait.targetId, target, relativeBounds, tAssert);
-          }
-
-          if (atLeastOne(tAssert.getRelativeLTRB())) {
-            final compareTrait = TraitHelper.findNonIntersecting(
-              trait,
-              traitId: tAssert.traitId,
-              rootTraits: rootTraits,
-            );
-            if (compareTrait == null) {
-              throw UnknowWidgetTraitException(traitId: trait.id);
-            }
-
-            final compareTarget = TraitHelper.getTarget(
-              compareTrait,
-              tester: tester,
-            );
-            final compareBounds = tester.getRect(
-              ft.find.byWidget(compareTarget),
-            );
-
-            testRelativePosition(
-              trait.targetId,
-              target,
-              bounds,
-              compareBounds,
-              tAssert,
-            );
           }
         }
 
@@ -129,13 +136,7 @@ class LayoutTester {
           );
           final compareSize = tester.getSize(ft.find.byWidget(compareTarget));
 
-          testRelativeSize(
-            trait.targetId,
-            target,
-            bounds.size,
-            compareSize,
-            tAssert,
-          );
+          testRelativeSize(trait.targetId, bounds.size, compareSize, tAssert);
         }
 
         if (tAssert is CustomTraitAssert) {
@@ -181,7 +182,6 @@ class LayoutTester {
   /// The position rectangle of the widget is provided as [targetBounds].
   void testPosition(
     TargetId targetId,
-    Widget target,
     Rect targetBounds,
     PositionAssert assertion,
   ) {
@@ -225,7 +225,6 @@ class LayoutTester {
   /// The size of the widget is provided as [targetSize].
   void testSize(
     TargetId targetId,
-    Widget target,
     Size targetSize,
     SizeAssert assertion,
   ) {
@@ -254,67 +253,99 @@ class LayoutTester {
   /// position.
   ///
   /// The position rectangle of the widget is provided as [targetBounds],
-  /// the position to compare to as [compareBounds].
+  /// the position to compare to as [refBounds].
   void testRelativePosition(
     TargetId targetId,
-    Widget target,
     Rect targetBounds,
-    Rect compareBounds,
+    Rect refBounds,
     RelativePositionAssert assertion,
   ) {
-    final leftDistance = assertion.leftDistance;
-    DoublePair? leftDistanceFail;
-    if (leftDistance != null &&
-        leftDistance != targetBounds.left - compareBounds.right) {
-      leftDistanceFail = DoublePair(
-        targetBounds.left - compareBounds.right,
-        leftDistance,
-      );
-    }
+    final left = assertion.left;
+    final top = assertion.top;
+    final right = assertion.right;
+    final bottom = assertion.bottom;
 
-    final topDistance = assertion.topDistance;
-    DoublePair? topDistanceFail;
-    if (topDistance != null &&
-        topDistance != targetBounds.top - compareBounds.bottom) {
-      topDistanceFail = DoublePair(
-        targetBounds.top - compareBounds.bottom,
-        topDistance,
-      );
-    }
+    DoublePair? leftFail;
+    DoublePair? topFail;
+    DoublePair? rightFail;
+    DoublePair? bottomFail;
 
-    final rightDistance = assertion.rightDistance;
-    DoublePair? rightDistanceFail;
-    if (rightDistance != null &&
-        rightDistance != compareBounds.left - targetBounds.right) {
-      rightDistanceFail = DoublePair(
-        compareBounds.left - targetBounds.right,
-        rightDistance,
-      );
-    }
+    if (assertion.refersTo == PositionReference.target) {
+      if (left != null && left != targetBounds.left - refBounds.right) {
+        leftFail = DoublePair(targetBounds.left - refBounds.right, left);
+      }
 
-    final bottomDistance = assertion.bottomDistance;
-    DoublePair? bottomDistanceFail;
-    if (bottomDistance != null &&
-        bottomDistance != compareBounds.top - targetBounds.bottom) {
-      bottomDistanceFail = DoublePair(
-        compareBounds.top - targetBounds.bottom,
-        bottomDistance,
-      );
-    }
+      if (top != null && top != targetBounds.top - refBounds.bottom) {
+        topFail = DoublePair(targetBounds.top - refBounds.bottom, top);
+      }
 
-    if (atLeastOne([
-      leftDistanceFail,
-      topDistanceFail,
-      rightDistanceFail,
-      bottomDistanceFail,
-    ])) {
-      throw AssertionFailedException.forRelativePosition(
-        targetId: targetId,
-        leftDistance: leftDistanceFail,
-        topDistance: topDistanceFail,
-        rightDistance: rightDistanceFail,
-        bottomDistance: bottomDistanceFail,
-      );
+      if (right != null && right != refBounds.left - targetBounds.right) {
+        rightFail = DoublePair(refBounds.left - targetBounds.right, right);
+      }
+
+      if (bottom != null && bottom != refBounds.top - targetBounds.bottom) {
+        bottomFail = DoublePair(refBounds.top - targetBounds.bottom, bottom);
+      }
+
+      if (atLeastOne([leftFail, topFail, rightFail, bottomFail])) {
+        throw AssertionFailedException.forRelativePosition(
+          targetId: targetId,
+          leftDistance: leftFail,
+          topDistance: topFail,
+          rightDistance: rightFail,
+          bottomDistance: bottomFail,
+        );
+      }
+    } else if (assertion.refersTo == PositionReference.parent) {
+      if (left != null && left != targetBounds.left) {
+        leftFail = DoublePair(targetBounds.left, left);
+      }
+      if (top != null && top != targetBounds.top) {
+        topFail = DoublePair(targetBounds.top, top);
+      }
+      if (right != null && right != targetBounds.right) {
+        rightFail = DoublePair(targetBounds.right, right);
+      }
+      if (bottom != null && bottom != targetBounds.bottom) {
+        bottomFail = DoublePair(targetBounds.bottom, bottom);
+      }
+
+      if (atLeastOne([leftFail, topFail, rightFail, bottomFail])) {
+        throw AssertionFailedException.forPosition(
+          targetId: targetId,
+          left: leftFail,
+          top: topFail,
+          right: rightFail,
+          bottom: bottomFail,
+        );
+      }
+    } else if (assertion.refersTo == PositionReference.parentBounds ||
+        assertion.refersTo == PositionReference.globalBounds) {
+      if (left != null && left != targetBounds.left - refBounds.left) {
+        leftFail = DoublePair(targetBounds.left - refBounds.left, left);
+      }
+
+      if (top != null && top != targetBounds.top - refBounds.top) {
+        topFail = DoublePair(targetBounds.top - refBounds.top, top);
+      }
+
+      if (right != null && right != refBounds.right - targetBounds.right) {
+        rightFail = DoublePair(refBounds.right - targetBounds.right, right);
+      }
+
+      if (bottom != null && bottom != refBounds.bottom - targetBounds.bottom) {
+        bottomFail = DoublePair(refBounds.bottom - targetBounds.bottom, bottom);
+      }
+
+      if (atLeastOne([leftFail, topFail, rightFail, bottomFail])) {
+        throw AssertionFailedException.forRelativePosition(
+          targetId: targetId,
+          leftDistance: leftFail,
+          topDistance: topFail,
+          rightDistance: rightFail,
+          bottomDistance: bottomFail,
+        );
+      }
     }
   }
 
@@ -324,28 +355,27 @@ class LayoutTester {
   /// as [compareSize].
   void testRelativeSize(
     TargetId targetId,
-    Widget target,
     Size targetSize,
     Size compareSize,
     RelativeSizeAssert assertion,
   ) {
-    final pWidth = assertion.percentageWidth;
-    DoublePair? pWidthFail;
+    final pWidth = assertion.width;
+    DoublePair? widthFail;
     if (pWidth != null && pWidth != targetSize.width / compareSize.width) {
-      pWidthFail = DoublePair(targetSize.width / compareSize.width, pWidth);
+      widthFail = DoublePair(targetSize.width / compareSize.width, pWidth);
     }
 
-    final pHeight = assertion.percentageHeight;
-    DoublePair? pHeightFail;
+    final pHeight = assertion.height;
+    DoublePair? heightFail;
     if (pHeight != null && pHeight != targetSize.height / compareSize.height) {
-      pHeightFail = DoublePair(targetSize.height / compareSize.height, pHeight);
+      heightFail = DoublePair(targetSize.height / compareSize.height, pHeight);
     }
 
-    if (atLeastOne([pWidthFail, pHeightFail])) {
+    if (atLeastOne([widthFail, heightFail])) {
       throw AssertionFailedException.forRelativeSize(
         targetId: targetId,
-        pWidth: pWidthFail,
-        pHeight: pHeightFail,
+        pWidth: widthFail,
+        pHeight: heightFail,
       );
     }
   }

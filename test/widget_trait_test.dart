@@ -4,6 +4,30 @@ import 'package:layout_tester/layout_tester.dart';
 
 void main() {
   group('WidgetTrait -', () {
+    test('Instantiation', () {
+      expect(
+        () => WidgetTrait(
+          targetId: const TargetId(key: Key('#')),
+          asserts: const [
+            PositionAssert.LTRB(1, 1, 1, 1),
+            PositionAssert.LTRB(1, 1, 1, 1),
+          ],
+        ),
+        throwsAssertionError,
+      );
+
+      expect(
+        () => WidgetTrait(
+          targetId: const TargetId(key: Key('#')),
+          asserts: const [
+            SizeAssert.WH(1, 1),
+            SizeAssert.WH(1, 1),
+          ],
+        ),
+        throwsAssertionError,
+      );
+    });
+
     test('Check parent linkage', () {
       final trait = WidgetTrait(
         id: '0',

@@ -6,7 +6,6 @@ void main() {
   const traitId = 'TEST';
   const targetId = TargetId(type: Container);
   const bounds = Rect.fromLTWH(10, 10, 10, 10);
-  final widget = Container();
   final tester = LayoutTester(MockWidgetTester());
 
   group('LayoutTester -', () {
@@ -60,11 +59,7 @@ void main() {
               asserts: const [
                 SizeAssert.WH(100, 100),
                 PositionAssert.LTRB(150, 250, 250, 350),
-                RelativeSizeAssert(
-                  traitId: 'rightBox',
-                  percentageWidth: 2,
-                  percentageHeight: 2,
-                ),
+                RelativeSizeAssert(traitId: 'rightBox', width: 2, height: 2),
               ],
             )
           ],
@@ -83,22 +78,15 @@ void main() {
               asserts: const [
                 SizeAssert.WH(50, 50),
                 PositionAssert.LTRB(400, 425, 450, 475),
-                RelativeSizeAssert(
-                  traitId: 'leftBox',
-                  percentageWidth: 0.5,
-                  percentageHeight: 0.5,
-                ),
-                RelativePositionAssert.within(
+                RelativeSizeAssert(traitId: 'leftBox', width: 0.5, height: 0.5),
+                RelativePositionAssert.parent(
                   traitId: 'rightExpanded',
                   left: 0,
                   top: 425,
                   right: 50,
                   bottom: 475,
                 ),
-                RelativePositionAssert.relativeTo(
-                  traitId: 'leftBox',
-                  leftDistance: 150,
-                ),
+                RelativePositionAssert.target(traitId: 'leftBox', left: 150),
               ],
             ),
             WidgetTrait(
@@ -118,7 +106,6 @@ void main() {
       expect(
         () => tester.testPosition(
           targetId,
-          widget,
           bounds,
           const PositionAssert(left: 10, top: 10, right: 20, bottom: 20),
         ),
@@ -129,7 +116,6 @@ void main() {
       expect(
         () => tester.testPosition(
           targetId,
-          widget,
           bounds,
           const PositionAssert(left: 0, top: 10, right: 20, bottom: 20),
         ),
@@ -138,7 +124,6 @@ void main() {
       expect(
         () => tester.testPosition(
           targetId,
-          widget,
           bounds,
           const PositionAssert(left: 10, top: 0, right: 20, bottom: 20),
         ),
@@ -147,7 +132,6 @@ void main() {
       expect(
         () => tester.testPosition(
           targetId,
-          widget,
           bounds,
           const PositionAssert(left: 10, top: 10, right: 0, bottom: 20),
         ),
@@ -156,7 +140,6 @@ void main() {
       expect(
         () => tester.testPosition(
           targetId,
-          widget,
           bounds,
           const PositionAssert(left: 10, top: 10, right: 20, bottom: 0),
         ),
@@ -169,7 +152,6 @@ void main() {
       expect(
         () => tester.testSize(
           targetId,
-          widget,
           bounds.size,
           const SizeAssert(width: 10, height: 10),
         ),
@@ -180,7 +162,6 @@ void main() {
       expect(
         () => tester.testSize(
           targetId,
-          widget,
           bounds.size,
           const SizeAssert(width: 0, height: 10),
         ),
@@ -189,7 +170,6 @@ void main() {
       expect(
         () => tester.testSize(
           targetId,
-          widget,
           bounds.size,
           const SizeAssert(width: 10, height: 0),
         ),
@@ -230,15 +210,14 @@ void main() {
             expect(
               () => tester.testRelativePosition(
                 targetId,
-                widget,
                 bounds,
                 ref,
-                RelativePositionAssert.relativeTo(
+                RelativePositionAssert.target(
                   traitId: traitId,
-                  rightDistance: leftFrom,
-                  bottomDistance: topFrom,
-                  leftDistance: rightFrom,
-                  topDistance: bottomFrom,
+                  right: leftFrom,
+                  bottom: topFrom,
+                  left: rightFrom,
+                  top: bottomFrom,
                 ),
               ),
               returnsNormally,
@@ -252,52 +231,36 @@ void main() {
         expect(
           () => tester.testRelativePosition(
             targetId,
-            widget,
             bounds,
             bounds,
-            const RelativePositionAssert.relativeTo(
-              traitId: traitId,
-              rightDistance: 10,
-            ),
+            const RelativePositionAssert.target(traitId: traitId, right: 10),
           ),
           throwsException,
         );
         expect(
           () => tester.testRelativePosition(
             targetId,
-            widget,
             bounds,
             bounds,
-            const RelativePositionAssert.relativeTo(
-              traitId: traitId,
-              bottomDistance: 10,
-            ),
+            const RelativePositionAssert.target(traitId: traitId, bottom: 10),
           ),
           throwsException,
         );
         expect(
           () => tester.testRelativePosition(
             targetId,
-            widget,
             bounds,
             bounds,
-            const RelativePositionAssert.relativeTo(
-              traitId: traitId,
-              leftDistance: 10,
-            ),
+            const RelativePositionAssert.target(traitId: traitId, left: 10),
           ),
           throwsException,
         );
         expect(
           () => tester.testRelativePosition(
             targetId,
-            widget,
             bounds,
             bounds,
-            const RelativePositionAssert.relativeTo(
-              traitId: traitId,
-              topDistance: 10,
-            ),
+            const RelativePositionAssert.target(traitId: traitId, top: 10),
           ),
           throwsException,
         );
@@ -309,14 +272,9 @@ void main() {
       expect(
         () => tester.testRelativeSize(
           targetId,
-          widget,
           const Size(50, 50),
           const Size(25, 100),
-          const RelativeSizeAssert(
-            traitId: traitId,
-            percentageWidth: 2,
-            percentageHeight: 0.5,
-          ),
+          const RelativeSizeAssert(traitId: traitId, width: 2, height: 0.5),
         ),
         returnsNormally,
       );
@@ -325,26 +283,18 @@ void main() {
       expect(
         () => tester.testRelativeSize(
           targetId,
-          widget,
           const Size(50, 50),
           const Size(25, 100),
-          const RelativeSizeAssert(
-            traitId: traitId,
-            percentageWidth: 1,
-          ),
+          const RelativeSizeAssert(traitId: traitId, width: 1),
         ),
         throwsException,
       );
       expect(
         () => tester.testRelativeSize(
           targetId,
-          widget,
           const Size(50, 50),
           const Size(25, 100),
-          const RelativeSizeAssert(
-            traitId: traitId,
-            percentageHeight: 1,
-          ),
+          const RelativeSizeAssert(traitId: traitId, height: 1),
         ),
         throwsException,
       );
