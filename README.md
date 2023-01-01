@@ -108,14 +108,13 @@ testWidgets('example', (tester) async {
                                 targetId: const TargetId(type: Container),
                                 asserts: const [
                                     // Element 5 has to be dimension 50x50.
-                                    SizeAssert.WH(50, 50),
+                                    SizeAssert.symmetric(50),
 
                                     // Element 5 has to be the 0.1 of the size of
                                     // element 'e1' (Element 1).
-                                    RelativeSizeAssert(
+                                    RelativeSizeAssert.symmetric(
                                         traitId: 'e2',
-                                        percentageWidth: 0.1,
-                                        percentageHeight: 0.1,
+                                        0.1,
                                     ),
                                 ],
                             ),
@@ -151,14 +150,13 @@ testLayout(
             targetId: const TargetId(type: Container),
             asserts: const [
                 // Element 5 has to be dimension 50x50.
-                SizeAssert.WH(50, 50),
+                SizeAssert.symmetric(50),
                 
                 // Element 5 has to be the 0.1 of the size of
                 // element'e1' (Element 1).
-                const RelativeSizeAssert(
+                const RelativeSizeAssert.symmetric(
                     traitId: 'e2',
-                    percentageWidth: 0.1,
-                    percentageHeight: 0.1,
+                    0.1,
                 ),
             ],
         ),
@@ -267,9 +265,9 @@ testLayout(
         WidgetTrait(
             targetId: const TargetId(type: Text),
             asserts: [
-                RelativePositionAssert(
+                RelativePositionAssert.target(
                     traitId: 'trait0',
-                    leftDistance: 25,
+                    left: 25,
                 )
             ],
         )

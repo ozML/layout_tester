@@ -321,20 +321,20 @@ class LayoutTester {
       }
     } else if (assertion.refersTo == PositionReference.parentBounds ||
         assertion.refersTo == PositionReference.globalBounds) {
-      if (left != null && left != targetBounds.left - refBounds.left) {
-        leftFail = DoublePair(targetBounds.left - refBounds.left, left);
+      if (left != null && left != targetBounds.left) {
+        leftFail = DoublePair(targetBounds.left, left);
       }
 
-      if (top != null && top != targetBounds.top - refBounds.top) {
-        topFail = DoublePair(targetBounds.top - refBounds.top, top);
+      if (top != null && top != targetBounds.top) {
+        topFail = DoublePair(targetBounds.top, top);
       }
 
-      if (right != null && right != refBounds.right - targetBounds.right) {
-        rightFail = DoublePair(refBounds.right - targetBounds.right, right);
+      if (right != null && right != refBounds.width - targetBounds.right) {
+        rightFail = DoublePair(refBounds.width - targetBounds.right, right);
       }
 
-      if (bottom != null && bottom != refBounds.bottom - targetBounds.bottom) {
-        bottomFail = DoublePair(refBounds.bottom - targetBounds.bottom, bottom);
+      if (bottom != null && bottom != refBounds.height - targetBounds.bottom) {
+        bottomFail = DoublePair(refBounds.height - targetBounds.bottom, bottom);
       }
 
       if (atLeastOne([leftFail, topFail, rightFail, bottomFail])) {

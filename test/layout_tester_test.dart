@@ -178,62 +178,129 @@ void main() {
     });
 
     group('testRelativePosition -', () {
-      const translate = 40.0;
+      group('${PositionReference.target} -', () {
+        const translate = 40.0;
 
-      // Valid
-      for (int dx = -1; dx <= 1; dx++) {
-        for (int dy = -1; dy <= 1; dy++) {
-          test(' pos ($dx, $dy)', () {
-            final ref = bounds.translate(dx * translate, dy * translate);
+        // Valid
+        for (int dx = -1; dx <= 1; dx++) {
+          for (int dy = -1; dy <= 1; dy++) {
+            test(' pos ($dx, $dy)', () {
+              final ref = bounds.translate(dx * translate, dy * translate);
 
-            double? leftFrom;
-            double? rightFrom;
-            if (dx != 0) {
-              if (dx > 0) {
-                leftFrom = ref.left - bounds.right;
-              } else {
-                rightFrom = bounds.left - ref.right;
+              double? leftFrom;
+              double? rightFrom;
+              if (dx != 0) {
+                if (dx > 0) {
+                  leftFrom = ref.left - bounds.right;
+                } else {
+                  rightFrom = bounds.left - ref.right;
+                }
               }
-            }
 
-            double? topFrom;
-            double? bottomFrom;
-            if (dy != 0) {
-              if (dy > 0) {
-                topFrom = ref.top - bounds.bottom;
-              } else {
-                bottomFrom = bounds.top - ref.bottom;
+              double? topFrom;
+              double? bottomFrom;
+              if (dy != 0) {
+                if (dy > 0) {
+                  topFrom = ref.top - bounds.bottom;
+                } else {
+                  bottomFrom = bounds.top - ref.bottom;
+                }
               }
-            }
 
-            // valid
-            expect(
-              () => tester.testRelativePosition(
-                targetId,
-                bounds,
-                ref,
-                RelativePositionAssert.target(
-                  traitId: traitId,
-                  right: leftFrom,
-                  bottom: topFrom,
-                  left: rightFrom,
-                  top: bottomFrom,
+              // valid
+              expect(
+                () => tester.testRelativePosition(
+                  targetId,
+                  bounds,
+                  ref,
+                  RelativePositionAssert.target(
+                    traitId: traitId,
+                    right: leftFrom,
+                    bottom: topFrom,
+                    left: rightFrom,
+                    top: bottomFrom,
+                  ),
                 ),
-              ),
-              returnsNormally,
-            );
-          });
+                returnsNormally,
+              );
+            });
+          }
         }
-      }
 
-      // Invalid
-      test('Invalid', () {
+        // Invalid
+        test('Invalid', () {
+          expect(
+            () => tester.testRelativePosition(
+              targetId,
+              bounds,
+              bounds,
+              const RelativePositionAssert.target(traitId: traitId, right: 10),
+            ),
+            throwsException,
+          );
+          expect(
+            () => tester.testRelativePosition(
+              targetId,
+              bounds,
+              bounds,
+              const RelativePositionAssert.target(traitId: traitId, bottom: 10),
+            ),
+            throwsException,
+          );
+          expect(
+            () => tester.testRelativePosition(
+              targetId,
+              bounds,
+              bounds,
+              const RelativePositionAssert.target(traitId: traitId, left: 10),
+            ),
+            throwsException,
+          );
+          expect(
+            () => tester.testRelativePosition(
+              targetId,
+              bounds,
+              bounds,
+              const RelativePositionAssert.target(traitId: traitId, top: 10),
+            ),
+            throwsException,
+          );
+        });
+      });
+
+      test('${PositionReference.parent}', () {
+        const parentBounds = Rect.fromLTWH(100, 200, 100, 100);
+
+        /// Valid
         expect(
           () => tester.testRelativePosition(
             targetId,
             bounds,
+            parentBounds,
+            const RelativePositionAssert.parent(
+              traitId: traitId,
+              left: 10,
+              top: 10,
+              right: 20,
+              bottom: 20,
+            ),
+          ),
+          returnsNormally,
+        );
+
+        // Invalid
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
             bounds,
-            const RelativePositionAssert.target(traitId: traitId, right: 10),
+            parentBounds,
+            const RelativePositionAssert.parent(
+              traitId: traitId,
+              left: 0,
+              top: 10,
+              right: 20,
+              bottom: 20,
+            ),
           ),
           throwsException,
         );
@@ -241,8 +308,14 @@ void main() {
           () => tester.testRelativePosition(
             targetId,
             bounds,
-            bounds,
-            const RelativePositionAssert.target(traitId: traitId, bottom: 10),
+            parentBounds,
+            const RelativePositionAssert.parent(
+              traitId: traitId,
+              left: 10,
+              top: 0,
+              right: 20,
+              bottom: 20,
+            ),
           ),
           throwsException,
         );
@@ -250,8 +323,14 @@ void main() {
           () => tester.testRelativePosition(
             targetId,
             bounds,
-            bounds,
-            const RelativePositionAssert.target(traitId: traitId, left: 10),
+            parentBounds,
+            const RelativePositionAssert.parent(
+              traitId: traitId,
+              left: 10,
+              top: 10,
+              right: 0,
+              bottom: 20,
+            ),
           ),
           throwsException,
         );
@@ -259,8 +338,178 @@ void main() {
           () => tester.testRelativePosition(
             targetId,
             bounds,
+            parentBounds,
+            const RelativePositionAssert.parent(
+              traitId: traitId,
+              left: 10,
+              top: 10,
+              right: 20,
+              bottom: 0,
+            ),
+          ),
+          throwsException,
+        );
+      });
+
+      test('${PositionReference.parentBounds}', () {
+        const parentBounds = Rect.fromLTWH(100, 200, 100, 100);
+
+        /// Valid
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
             bounds,
-            const RelativePositionAssert.target(traitId: traitId, top: 10),
+            parentBounds,
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 10,
+              top: 10,
+              right: 80,
+              bottom: 80,
+            ),
+          ),
+          returnsNormally,
+        );
+
+        // Invalid
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            bounds,
+            parentBounds,
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 0,
+              top: 10,
+              right: 80,
+              bottom: 80,
+            ),
+          ),
+          throwsException,
+        );
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            bounds,
+            parentBounds,
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 10,
+              top: 0,
+              right: 80,
+              bottom: 80,
+            ),
+          ),
+          throwsException,
+        );
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            bounds,
+            parentBounds,
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 10,
+              top: 10,
+              right: 0,
+              bottom: 80,
+            ),
+          ),
+          throwsException,
+        );
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            bounds,
+            parentBounds,
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 10,
+              top: 10,
+              right: 80,
+              bottom: 0,
+            ),
+          ),
+          throwsException,
+        );
+      });
+
+      test('${PositionReference.globalBounds}', () {
+        /// Valid
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            bounds,
+            Offset.zero & const Size(800, 600),
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 10,
+              top: 10,
+              right: 780,
+              bottom: 580,
+            ),
+          ),
+          returnsNormally,
+        );
+
+        // Invalid
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            bounds,
+            Offset.zero & const Size(800, 600),
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 0,
+              top: 10,
+              right: 780,
+              bottom: 580,
+            ),
+          ),
+          throwsException,
+        );
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            bounds,
+            Offset.zero & const Size(800, 600),
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 10,
+              top: 0,
+              right: 780,
+              bottom: 580,
+            ),
+          ),
+          throwsException,
+        );
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            bounds,
+            Offset.zero & const Size(800, 600),
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 10,
+              top: 10,
+              right: 0,
+              bottom: 580,
+            ),
+          ),
+          throwsException,
+        );
+        expect(
+          () => tester.testRelativePosition(
+            targetId,
+            bounds,
+            Offset.zero & const Size(800, 600),
+            const RelativePositionAssert.parentBounds(
+              traitId: traitId,
+              left: 10,
+              top: 10,
+              right: 780,
+              bottom: 0,
+            ),
           ),
           throwsException,
         );
