@@ -1,3 +1,3 @@
 export 'base.dart';
-export 'global.dart';
+export 'general.dart';
 export 'relative.dart';

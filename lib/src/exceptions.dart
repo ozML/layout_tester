@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'trait_assert/assert.dart';
 import 'value_pair.dart';
 import 'widget_trait.dart';
 
@@ -39,15 +42,15 @@ class UnknowWidgetTraitException extends LayoutTesterException {
 /// Holds the info about an assertion failure on a specific field.
 class FailedAssertionInfo<T> extends ValuePair<T> {
   /// Creates an instance of [FailedAssertionInfo].
-  FailedAssertionInfo(this.fieldName, T value, T expected)
+  FailedAssertionInfo(this.subject, T value, T expected)
       : super(value, expected);
 
   /// Creates an instance of [FailedAssertionInfo] from a [ValuePair].
   FailedAssertionInfo.fromPair(String fieldName, ValuePair<T> pair)
       : this(fieldName, pair.value1, pair.value2);
 
-  /// Field name.
-  final String fieldName;
+  /// Subject info.
+  final String subject;
 
   /// Returns the given value.
   T get value => value1;
@@ -67,7 +70,7 @@ class AssertionFailedException extends LayoutTesterException {
           '$cause\n\n'
           '${infos.isNotEmpty ? 'Expected\n' : ''}'
           '${infos.map(
-                (e) => '${e.fieldName}: ${e.value}; Found: ${e.expected}',
+                (e) => '${e.subject}: ${e.value}; Found: ${e.expected}',
               ).join('\n')}',
         );
 
@@ -102,7 +105,7 @@ class AssertionFailedException extends LayoutTesterException {
     DoublePair? height,
   }) : this(
           targetId: targetId,
-          cause: 'Size assertion for target ${_idInfo(targetId)} failed.\n\n',
+          cause: 'Size assertion for target ${_idInfo(targetId)} failed.',
           infos: [
             if (width != null) FailedAssertionInfo.fromPair('Width', width),
             if (height != null) FailedAssertionInfo.fromPair('Height', height),
@@ -148,13 +151,25 @@ class AssertionFailedException extends LayoutTesterException {
   }) : this(
           targetId: targetId,
           cause: 'Relative size assertion for '
-              'target ${_idInfo(targetId)} failed.\n\n',
+              'target ${_idInfo(targetId)} failed.',
           infos: [
             if (pWidth != null)
               FailedAssertionInfo.fromPair('Relative width', pWidth),
             if (pHeight != null)
               FailedAssertionInfo.fromPair('Relative height', pHeight),
           ],
+        );
+
+  AssertionFailedException.forRelation({
+    required TargetId targetId,
+    required PropertyRelation relation,
+    required Rect targetBounds,
+    required double compareValue,
+  }) : super(
+          'Relation assertion for target ${_idInfo(targetId)} failed.\n\n'
+          'Expected:\n'
+          'Value should be ${_relationText(relation)} \'$compareValue\'\n\n'
+          'Given bounds:\n$targetBounds',
         );
 }
 
@@ -164,3 +179,20 @@ String _idInfo(TargetId targetId) => '#(${[
       targetId.elementIndex,
       if (targetId.customLocator != null) 'customLocator',
     ].where((element) => element != null).join(', ')})';
+
+String _relationText(PropertyRelation relation) {
+  switch (relation) {
+    case PropertyRelation.equal:
+      return 'equal';
+    case PropertyRelation.unEqual:
+      return 'unequal';
+    case PropertyRelation.greaterThan:
+      return 'greater than';
+    case PropertyRelation.greaterThanEqual:
+      return 'greater than or equal';
+    case PropertyRelation.lessThan:
+      return 'less than';
+    case PropertyRelation.lessThanEqual:
+      return 'less than or equal';
+  }
+}

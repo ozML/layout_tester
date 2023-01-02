@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:layout_tester/src/widget_trait.dart';
 
 import 'base.dart';
-import 'global.dart';
+import 'general.dart';
 
 /// Defines possible references for [RelativePositionAssert].
 enum PositionReference {

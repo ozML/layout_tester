@@ -441,8 +441,7 @@ void main() {
             targetId,
             bounds,
             Offset.zero & const Size(800, 600),
-            const RelativePositionAssert.parentBounds(
-              traitId: traitId,
+            const RelativePositionAssert.globalBounds(
               left: 10,
               top: 10,
               right: 780,
@@ -458,8 +457,7 @@ void main() {
             targetId,
             bounds,
             Offset.zero & const Size(800, 600),
-            const RelativePositionAssert.parentBounds(
-              traitId: traitId,
+            const RelativePositionAssert.globalBounds(
               left: 0,
               top: 10,
               right: 780,
@@ -473,8 +471,7 @@ void main() {
             targetId,
             bounds,
             Offset.zero & const Size(800, 600),
-            const RelativePositionAssert.parentBounds(
-              traitId: traitId,
+            const RelativePositionAssert.globalBounds(
               left: 10,
               top: 0,
               right: 780,
@@ -488,8 +485,7 @@ void main() {
             targetId,
             bounds,
             Offset.zero & const Size(800, 600),
-            const RelativePositionAssert.parentBounds(
-              traitId: traitId,
+            const RelativePositionAssert.globalBounds(
               left: 10,
               top: 10,
               right: 0,
@@ -503,8 +499,7 @@ void main() {
             targetId,
             bounds,
             Offset.zero & const Size(800, 600),
-            const RelativePositionAssert.parentBounds(
-              traitId: traitId,
+            const RelativePositionAssert.globalBounds(
               left: 10,
               top: 10,
               right: 780,
@@ -544,6 +539,28 @@ void main() {
           const Size(50, 50),
           const Size(25, 100),
           const RelativeSizeAssert(traitId: traitId, height: 1),
+        ),
+        throwsException,
+      );
+    });
+
+    test('testRelation', () {
+      // Valid
+      expect(
+        () => tester.testRelation(
+          targetId,
+          const Rect.fromLTWH(10, 10, 50, 50),
+          widthIsEqual(50),
+        ),
+        returnsNormally,
+      );
+
+      // Invalid
+      expect(
+        () => tester.testRelation(
+          targetId,
+          const Rect.fromLTWH(10, 10, 50, 50),
+          widthIsEqual(100),
         ),
         throwsException,
       );

@@ -119,9 +119,7 @@ class LayoutTester {
               );
             }
           }
-        }
-
-        if (tAssert is RelativeSizeAssert) {
+        } else if (tAssert is RelativeSizeAssert) {
           final compareTrait = TraitHelper.findTrait(
             traitId: tAssert.traitId,
             rootTraits: rootTraits,
@@ -137,9 +135,9 @@ class LayoutTester {
           final compareSize = tester.getSize(ft.find.byWidget(compareTarget));
 
           testRelativeSize(trait.targetId, bounds.size, compareSize, tAssert);
-        }
-
-        if (tAssert is CustomTraitAssert) {
+        } else if (tAssert is RelationAssert) {
+          testRelation(trait.targetId, bounds, tAssert);
+        } else if (tAssert is CustomTraitAssert) {
           WidgetTrait? compareTrait;
           Rect? compareBounds;
 
@@ -376,6 +374,23 @@ class LayoutTester {
         targetId: targetId,
         pWidth: widthFail,
         pHeight: heightFail,
+      );
+    }
+  }
+
+  /// Tests if the target matches the relation rules given by the assertion.
+  void testRelation(
+    TargetId targetId,
+    Rect targetBounds,
+    RelationAssert assertion,
+  ) {
+    final success = assertion.evaluate(targetBounds);
+    if (!success) {
+      throw AssertionFailedException.forRelation(
+        targetId: targetId,
+        relation: assertion.relation,
+        targetBounds: targetBounds,
+        compareValue: assertion.value,
       );
     }
   }
