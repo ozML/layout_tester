@@ -31,6 +31,21 @@ class PositionAssert extends TraitAssert with EquatableMixin {
           bottom: bottom,
         );
 
+  /// Creates an instance of [PositionAssert] with the given location.
+  const PositionAssert.location(double x, double y) : this(left: x, top: y);
+
+  /// Creates an instance of [PositionAssert] from the given offset.
+  PositionAssert.offset(Offset offset) : this(left: offset.dx, top: offset.dy);
+
+  /// Creates an instance of [PositionAssert] from the given rectangle.
+  PositionAssert.bounds(Rect rect)
+      : this(
+          left: rect.left,
+          top: rect.top,
+          right: rect.right,
+          bottom: rect.bottom,
+        );
+
   /// Offset to the left border of the scope.
   final double? left;
 
@@ -67,6 +82,10 @@ class SizeAssert extends TraitAssert with EquatableMixin {
 
   /// Creates an instance of [SizeAssert] with all values set to [value].
   const SizeAssert.symmetric(double value) : this(width: value, height: value);
+
+  /// Creates an instance of [SizeAssert] fom the given size.
+  SizeAssert.dimension(Size size)
+      : this(width: size.width, height: size.height);
 
   /// The width.
   final double? width;

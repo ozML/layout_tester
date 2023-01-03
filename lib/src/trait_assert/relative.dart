@@ -9,7 +9,7 @@ enum PositionReference {
   /// Refers to a specified target trait.
   ///
   /// The target bounds must not intersect with the own. The positional fields
-  ///  signify the distance to the respective facing bound of the target.
+  /// signify the distance to the respective facing bound of the target.
   target,
 
   /// Refers to a specified parent trait.

@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'trait_assert/assert.dart';
+
+// Relation
 
 RelationAssert _widthIs(PropertyRelation relation, double value) =>
     RelationAssert(
@@ -215,3 +219,155 @@ RelationAssert bottomIsLessThan(double value) =>
 /// or equal [value].
 RelationAssert bottomIsLessThanEqual(double value) =>
     _bottomIs(PropertyRelation.lessThanEqual, value);
+
+// Position
+
+/// Returns a [PositionAssert] with the given left value.
+PositionAssert hasLeft(double left) => PositionAssert(left: left);
+
+/// Returns a [PositionAssert] with the given top value.
+PositionAssert hasTop(double top) => PositionAssert(top: top);
+
+/// Returns a [PositionAssert] with the given right value.
+PositionAssert hasRight(double right) => PositionAssert(right: right);
+
+/// Returns a [PositionAssert] with the given bottom value.
+PositionAssert hasBottom(double bottom) => PositionAssert(bottom: bottom);
+
+/// Returns a [PositionAssert] with the given location.
+PositionAssert hasLocation(double x, double y) => PositionAssert.location(x, y);
+
+/// Returns a [PositionAssert] with the given offset.
+PositionAssert hasOffset(Offset offset) => PositionAssert.offset(offset);
+
+/// Returns a [PositionAssert with the given bounds.
+PositionAssert hasBounds(Rect rect) => PositionAssert.bounds(rect);
+
+// Size
+
+/// Returns a [SizeAssert] with the given size.
+SizeAssert hasSize(double width, double height) =>
+    SizeAssert(width: width, height: height);
+
+/// Returns a [SizeAssert] with the given dimension.
+SizeAssert hasDimension(Size size) => SizeAssert.dimension(size);
+
+/// Returns a [SizeAssert] with the given width.
+SizeAssert hasWidth(double width) => SizeAssert(width: width);
+
+/// Returns a [SizeAssert] with the given height.
+SizeAssert hasHeight(double height) => SizeAssert(height: height);
+
+// Relative Position
+
+/// Returns a [RelativePositionAssert] with the distance to a left target.
+RelativePositionAssert hasLeftDistanceTo(double left, String traitId) =>
+    RelativePositionAssert.target(traitId: traitId, left: left);
+
+/// Returns a [RelativePositionAssert] with the distance to a top target.
+RelativePositionAssert hasTopDistanceTo(double top, String traitId) =>
+    RelativePositionAssert.target(traitId: traitId, top: top);
+
+/// Returns a [RelativePositionAssert] with the distance to a right target.
+RelativePositionAssert hasRightDistanceTo(double right, String traitId) =>
+    RelativePositionAssert.target(traitId: traitId, right: right);
+
+/// Returns a [RelativePositionAssert] with the distance to a bottom target.
+RelativePositionAssert hasBottomDistanceTo(double bottom, String traitId) =>
+    RelativePositionAssert.target(traitId: traitId, bottom: bottom);
+
+/// Returns a [RelativePositionAssert] with the given left value within the
+/// parents bounds.
+RelativePositionAssert hasLocalLeft(double left, String parentTraitId) =>
+    RelativePositionAssert.parent(traitId: parentTraitId, left: left);
+
+/// Returns a [RelativePositionAssert] with the given top value within the
+/// parents bounds.
+RelativePositionAssert hasLocalTop(double top, String parentTraitId) =>
+    RelativePositionAssert.parent(traitId: parentTraitId, top: top);
+
+/// Returns a [RelativePositionAssert] with the given right value within the
+/// parents bounds.
+RelativePositionAssert hasLocalRight(double right, String parentTraitId) =>
+    RelativePositionAssert.parent(traitId: parentTraitId, right: right);
+
+/// Returns a [RelativePositionAssert] with the given bottom value within the
+/// parents bounds.
+RelativePositionAssert hasLocalBottom(double bottom, String parentTraitId) =>
+    RelativePositionAssert.parent(traitId: parentTraitId, bottom: bottom);
+
+/// Returns a [RelativePositionAssert] with the given location within the
+/// parents bounds.
+RelativePositionAssert hasLocalLocation(
+  double x,
+  double y,
+  String parentTraitId,
+) =>
+    RelativePositionAssert.parent(traitId: parentTraitId, left: x, top: y);
+
+/// Returns a [RelativePositionAssert] with the given offset within the
+/// parents bounds.
+RelativePositionAssert hasLocalOffset(Offset offset, String parentTraitId) =>
+    RelativePositionAssert.parent(
+      traitId: parentTraitId,
+      left: offset.dx,
+      top: offset.dy,
+    );
+
+/// Returns a [RelativePositionAssert with the given bounds within the
+/// parents bounds.
+RelativePositionAssert hasLocalBounds(Rect rect, String parentTraitId) =>
+    RelativePositionAssert.parent(
+      traitId: parentTraitId,
+      left: rect.left,
+      top: rect.top,
+      right: rect.right,
+      bottom: rect.bottom,
+    );
+
+/// Returns a [RelativePositionAssert] with the distance to the parents left
+/// bound.
+RelativePositionAssert hasLocalLeftDistance(
+        double left, String parentTraitId) =>
+    RelativePositionAssert.parentBounds(traitId: parentTraitId, left: left);
+
+/// Returns a [RelativePositionAssert] with the distance to the parents top
+/// bound.
+RelativePositionAssert hasLocalTopDistance(double top, String parentTraitId) =>
+    RelativePositionAssert.parentBounds(traitId: parentTraitId, top: top);
+
+/// Returns a [RelativePositionAssert] with the distance to the parents right
+/// bound.
+RelativePositionAssert hasLocalRightDistance(
+  double right,
+  String parentTraitId,
+) =>
+    RelativePositionAssert.parentBounds(traitId: parentTraitId, right: right);
+
+/// Returns a [RelativePositionAssert] with the distance to the parents bottom
+/// bound.
+RelativePositionAssert hasLocalBottomDistance(
+  double bottom,
+  String parentTraitId,
+) =>
+    RelativePositionAssert.parentBounds(traitId: parentTraitId, bottom: bottom);
+
+/// Returns a [RelativePositionAssert] with the distance to the global left
+/// bound.
+RelativePositionAssert hasLeftDistance(double left) =>
+    RelativePositionAssert.globalBounds(left: left);
+
+/// Returns a [RelativePositionAssert] with the distance to the global top
+/// bound.
+RelativePositionAssert hasTopDistance(double top) =>
+    RelativePositionAssert.globalBounds(top: top);
+
+/// Returns a [RelativePositionAssert] with the distance to the global right
+/// bound.
+RelativePositionAssert hasRightDistance(double right) =>
+    RelativePositionAssert.globalBounds(right: right);
+
+/// Returns a [RelativePositionAssert] with the distance to the global bottom
+/// bound.
+RelativePositionAssert hasBottomDistance(double bottom) =>
+    RelativePositionAssert.globalBounds(bottom: bottom);
