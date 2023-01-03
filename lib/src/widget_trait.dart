@@ -89,15 +89,6 @@ class WidgetTrait with EquatableMixin {
     this.asserts = const [],
     List<WidgetTrait> descendants = const [],
   }) : _id = id ?? "#${++_idCounter}" {
-    assert(
-      asserts.hasSingleOrNone((element) => element is PositionAssert),
-      'Trait can only have a single position assert.',
-    );
-    assert(
-      asserts.hasSingleOrNone((element) => element is SizeAssert),
-      'Trait can only have a single size assert.',
-    );
-
     this.descendants = descendants
         .map((e) => WidgetTrait._(
               targetId: e.targetId,

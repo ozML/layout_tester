@@ -39,18 +39,12 @@ class LayoutTester {
       final target = TraitHelper.getTarget(trait, tester: tester);
       final bounds = tester.getRect(ft.find.byWidget(target));
 
-      final position = trait.asserts.whereType<PositionAssert>().singleOrEmpty;
-      if (position != null) {
-        testPosition(trait.targetId, bounds, position);
-      }
-
-      final size = trait.asserts.whereType<SizeAssert>().singleOrEmpty;
-      if (size != null) {
-        testSize(trait.targetId, bounds.size, size);
-      }
-
       for (final tAssert in trait.asserts) {
-        if (tAssert is RelativePositionAssert) {
+        if (tAssert is PositionAssert) {
+          testPosition(trait.targetId, bounds, tAssert);
+        } else if (tAssert is SizeAssert) {
+          testSize(trait.targetId, bounds.size, tAssert);
+        } else if (tAssert is RelativePositionAssert) {
           if (atLeastOne(tAssert.getLTRB())) {
             if (tAssert.refersTo == PositionReference.target) {
               final compareTrait = TraitHelper.findNonIntersecting(
