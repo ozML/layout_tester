@@ -14,23 +14,19 @@ void main() {
       WidgetTrait(
         id: 'appbar',
         targetId: const TargetId(type: AppBar),
-        asserts: const [SizeAssert.WH(800, 56)],
+        asserts: [hasSize(800, 56)],
         descendants: [
           WidgetTrait(
             id: 'appbar.text',
             targetId: const TargetId(type: Text),
             // Wrong height in test..
-            asserts: const [SizeAssert(height: 20)],
+            asserts: [hasHeight(20)],
           )
         ],
       ),
       WidgetTrait(
         targetId: const TargetId(type: FloatingActionButton),
-        asserts: const [
-          SizeAssert.WH(56, 56),
-          PositionAssert(left: 728, top: 528),
-          RelativePositionAssert.target(traitId: 'appbar', top: 472),
-        ],
+        asserts: [hasSize(56, 56), hasLocation(728, 528), hasTopDistance(528)],
       )
     });
   });

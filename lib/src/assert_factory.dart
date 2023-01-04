@@ -234,6 +234,15 @@ PositionAssert hasRight(double right) => PositionAssert(right: right);
 /// Returns a [PositionAssert] with the given bottom value.
 PositionAssert hasBottom(double bottom) => PositionAssert(bottom: bottom);
 
+/// Returns a [PositionAssert] with the given position infos.
+PositionAssert hasPosition(
+  double left,
+  double top,
+  double right,
+  double bottom,
+) =>
+    PositionAssert.LTRB(left, top, right, bottom);
+
 /// Returns a [PositionAssert] with the given location.
 PositionAssert hasLocation(double x, double y) => PositionAssert.location(x, y);
 
@@ -245,7 +254,7 @@ PositionAssert hasBounds(Rect rect) => PositionAssert.bounds(rect);
 
 // Size
 
-/// Returns a [SizeAssert] with the given size.
+/// Returns a [SizeAssert] with the given size infos.
 SizeAssert hasSize(double width, double height) =>
     SizeAssert(width: width, height: height);
 
@@ -296,6 +305,23 @@ RelativePositionAssert hasLocalRight(double right, String parentTraitId) =>
 RelativePositionAssert hasLocalBottom(double bottom, String parentTraitId) =>
     RelativePositionAssert.parent(traitId: parentTraitId, bottom: bottom);
 
+/// Returns a [RelativePositionAssert] with the given position infos within the
+/// parents bounds.
+RelativePositionAssert hasLocalPosition(
+  double left,
+  double top,
+  double right,
+  double bottom,
+  String parentTraitId,
+) =>
+    RelativePositionAssert.parent(
+      traitId: parentTraitId,
+      left: left,
+      top: top,
+      right: right,
+      bottom: bottom,
+    );
+
 /// Returns a [RelativePositionAssert] with the given location within the
 /// parents bounds.
 RelativePositionAssert hasLocalLocation(
@@ -328,7 +354,9 @@ RelativePositionAssert hasLocalBounds(Rect rect, String parentTraitId) =>
 /// Returns a [RelativePositionAssert] with the distance to the parents left
 /// bound.
 RelativePositionAssert hasLocalLeftDistance(
-        double left, String parentTraitId) =>
+  double left,
+  String parentTraitId,
+) =>
     RelativePositionAssert.parentBounds(traitId: parentTraitId, left: left);
 
 /// Returns a [RelativePositionAssert] with the distance to the parents top
@@ -371,3 +399,21 @@ RelativePositionAssert hasRightDistance(double right) =>
 /// bound.
 RelativePositionAssert hasBottomDistance(double bottom) =>
     RelativePositionAssert.globalBounds(bottom: bottom);
+
+// Relative Size
+
+/// Returns a [RelativeSizeAssert] with the given relative size info.
+RelativeSizeAssert hasRelativeSizeOf(
+  double width,
+  double height,
+  String traitId,
+) =>
+    RelativeSizeAssert(traitId: traitId, width: width, height: height);
+
+/// Returns a [RelativeSizeAssert] with the given relative width.
+RelativeSizeAssert hasRelativeWidthOf(double width, String traitId) =>
+    RelativeSizeAssert(traitId: traitId, width: width);
+
+/// Returns a [RelativeSizeAssert] with the given relative height.
+RelativeSizeAssert hasRelativeHeightOf(double height, String traitId) =>
+    RelativeSizeAssert(traitId: traitId, height: height);

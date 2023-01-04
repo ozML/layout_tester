@@ -48,18 +48,15 @@ void main() {
       layoutTester.testLayout({
         WidgetTrait(
           targetId: const TargetId(type: Expanded, elementIndex: 0),
-          asserts: const [
-            SizeAssert.WH(400, 600),
-            PositionAssert.LTRB(0, 0, 400, 600),
-          ],
+          asserts: [hasSize(400, 600), hasPosition(0, 0, 400, 600)],
           descendants: [
             WidgetTrait(
               id: 'leftBox',
               targetId: const TargetId(type: SizedBox),
-              asserts: const [
-                SizeAssert.WH(100, 100),
-                PositionAssert.LTRB(150, 250, 250, 350),
-                RelativeSizeAssert(traitId: 'rightBox', width: 2, height: 2),
+              asserts: [
+                hasSize(100, 100),
+                hasPosition(150, 250, 250, 350),
+                hasRelativeSizeOf(2, 2, 'rightBox'),
               ],
             )
           ],
@@ -67,34 +64,22 @@ void main() {
         WidgetTrait(
           id: 'rightExpanded',
           targetId: const TargetId(type: Expanded, elementIndex: 1),
-          asserts: const [
-            SizeAssert.WH(400, 600),
-            PositionAssert.LTRB(400, 0, 800, 600),
-          ],
+          asserts: [hasSize(400, 600), hasPosition(400, 0, 800, 600)],
           descendants: [
             WidgetTrait(
               id: 'rightBox',
               targetId: const TargetId(type: SizedBox),
-              asserts: const [
-                SizeAssert.WH(50, 50),
-                PositionAssert.LTRB(400, 425, 450, 475),
-                RelativeSizeAssert(traitId: 'leftBox', width: 0.5, height: 0.5),
-                RelativePositionAssert.parent(
-                  traitId: 'rightExpanded',
-                  left: 0,
-                  top: 425,
-                  right: 50,
-                  bottom: 475,
-                ),
-                RelativePositionAssert.target(traitId: 'leftBox', left: 150),
+              asserts: [
+                hasSize(50, 50),
+                hasPosition(400, 425, 450, 475),
+                hasRelativeSizeOf(0.5, 0.5, 'leftBox'),
+                hasLocalPosition(0, 425, 50, 475, 'rightExpanded'),
+                hasLeftDistanceTo(150, 'leftBox'),
               ],
             ),
             WidgetTrait(
               targetId: TargetId.custom((widget) => widget is Container),
-              asserts: const [
-                SizeAssert.WH(400, 300),
-                PositionAssert.LTRB(400, 0, 800, 300),
-              ],
+              asserts: [hasSize(400, 300), hasPosition(400, 0, 800, 300)],
             )
           ],
         ),

@@ -380,6 +380,17 @@ void main() {
         checkPosition(assertion, bottom: input);
       });
 
+      test('hasPosition', () {
+        final assertion = hasPosition(input, input, input, input);
+        checkPosition(
+          assertion,
+          left: input,
+          top: input,
+          right: input,
+          bottom: input,
+        );
+      });
+
       test('hasLocation', () {
         final assertion = hasLocation(input, input);
         checkPosition(assertion, left: input, top: input);
@@ -541,6 +552,19 @@ void main() {
         );
       });
 
+      test('hasLocalPosition', () {
+        final assertion = hasLocalPosition(input, input, input, input, id);
+        checkPosition(
+          assertion,
+          refersTo: PositionReference.parent,
+          traitId: id,
+          left: input,
+          top: input,
+          right: input,
+          bottom: input,
+        );
+      });
+
       test('hasLocalLocation', () {
         final assertion = hasLocalLocation(input, input, id);
         checkPosition(
@@ -661,6 +685,39 @@ void main() {
           traitId: '',
           bottom: input,
         );
+      });
+    });
+
+    group('Relative size -', () {
+      const id = 'TEST';
+      const input = 50.0;
+
+      void checkSize(
+        RelativeSizeAssert assertion, {
+        required String traitId,
+        double? width,
+        double? height,
+      }) {
+        expect(assertion.width, width);
+        expect(assertion.height, height);
+      }
+
+      test('hasRelativeSizeOf', () {
+        final assertion = hasRelativeSizeOf(input, input, id);
+
+        checkSize(assertion, traitId: id, width: input, height: input);
+      });
+
+      test('hasRelativeWidthOf', () {
+        final assertion = hasRelativeWidthOf(input, id);
+
+        checkSize(assertion, traitId: id, width: input);
+      });
+
+      test('hasRelativeHeightOf', () {
+        final assertion = hasRelativeHeightOf(input, id);
+
+        checkSize(assertion, traitId: id, height: input);
       });
     });
   });
