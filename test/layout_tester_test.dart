@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:layout_tester/layout_tester.dart';
+import 'package:layout_tester/assertion_factory.dart';
 
 void main() {
   const traitId = 'TEST';

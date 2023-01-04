@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:layout_tester/layout_tester.dart';
+import 'package:layout_tester/assertion_factory.dart';
 
 void main() {
   group('assert_factory.dart -', () {
