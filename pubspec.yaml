@@ -1,6 +1,6 @@
 name: layout_tester
 description: This helper package provides an easy interface for layout and widget composition testing. 
-version: 0.0.1+1
+version: 0.1.0
 homepage: https://github.com/ozML/layout_tester
 
 environment:
