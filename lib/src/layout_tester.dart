@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart' as ft;
 
-import 'extensions.dart';
 import 'value_pair.dart';
 import 'exceptions.dart';
 import 'trait_assert/assert.dart';
