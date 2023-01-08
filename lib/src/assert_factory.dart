@@ -4,61 +4,43 @@ import 'trait_assert/assert.dart';
 
 // Relation
 
-RelationAssert _widthIs(PropertyRelation relation, double value) =>
+RelationAssert _propertyIs(
+  PropertyRelation relation,
+  double Function(Rect targetBounds) pGetter,
+  double value,
+) =>
     RelationAssert(
       relation: relation,
       value: value,
       action: (targetBounds, value) =>
-          relation.evaluate(targetBounds.width, value),
+          relation.evaluate(pGetter(targetBounds), value),
     );
+
+RelationAssert _widthIs(PropertyRelation relation, double value) =>
+    _propertyIs(relation, (targetBounds) => targetBounds.width, value);
 
 RelationAssert _heightIs(PropertyRelation relation, double value) =>
-    RelationAssert(
-      relation: relation,
-      value: value,
-      action: (targetBounds, value) =>
-          relation.evaluate(targetBounds.height, value),
-    );
+    _propertyIs(relation, (targetBounds) => targetBounds.height, value);
 
 RelationAssert _leftIs(PropertyRelation relation, double value) =>
-    RelationAssert(
-      relation: relation,
-      value: value,
-      action: (targetBounds, value) =>
-          relation.evaluate(targetBounds.left, value),
-    );
+    _propertyIs(relation, (targetBounds) => targetBounds.left, value);
 
 RelationAssert _topIs(PropertyRelation relation, double value) =>
-    RelationAssert(
-      relation: relation,
-      value: value,
-      action: (targetBounds, value) =>
-          relation.evaluate(targetBounds.top, value),
-    );
+    _propertyIs(relation, (targetBounds) => targetBounds.top, value);
 
 RelationAssert _rightIs(PropertyRelation relation, double value) =>
-    RelationAssert(
-      relation: relation,
-      value: value,
-      action: (targetBounds, value) =>
-          relation.evaluate(targetBounds.right, value),
-    );
+    _propertyIs(relation, (targetBounds) => targetBounds.right, value);
 
 RelationAssert _bottomIs(PropertyRelation relation, double value) =>
-    RelationAssert(
-      relation: relation,
-      value: value,
-      action: (targetBounds, value) =>
-          relation.evaluate(targetBounds.bottom, value),
-    );
+    _propertyIs(relation, (targetBounds) => targetBounds.bottom, value);
 
 /// Returns a [RelationAssert] which checks whether width is equal [value].
 RelationAssert widthIsEqual(double value) =>
     _widthIs(PropertyRelation.equal, value);
 
 /// Returns a [RelationAssert] which checks whether width is unequal [value].
-RelationAssert widthIsUnEqual(double value) =>
-    _widthIs(PropertyRelation.unEqual, value);
+RelationAssert widthIsUnequal(double value) =>
+    _widthIs(PropertyRelation.unequal, value);
 
 /// Returns a [RelationAssert] which checks whether width is greater than
 /// [value].
@@ -85,8 +67,8 @@ RelationAssert heightIsEqual(double value) =>
     _heightIs(PropertyRelation.equal, value);
 
 /// Returns a [RelationAssert] which checks whether height is unequal [value].
-RelationAssert heightIsUnEqual(double value) =>
-    _heightIs(PropertyRelation.unEqual, value);
+RelationAssert heightIsUnequal(double value) =>
+    _heightIs(PropertyRelation.unequal, value);
 
 /// Returns a [RelationAssert] which checks whether height is greater than
 /// [value].
@@ -113,8 +95,8 @@ RelationAssert leftIsEqual(double value) =>
     _leftIs(PropertyRelation.equal, value);
 
 /// Returns a [RelationAssert] which checks whether left is unequal [value].
-RelationAssert leftIsUnEqual(double value) =>
-    _leftIs(PropertyRelation.unEqual, value);
+RelationAssert leftIsUnequal(double value) =>
+    _leftIs(PropertyRelation.unequal, value);
 
 /// Returns a [RelationAssert] which checks whether left is greater than
 /// [value].
@@ -141,8 +123,8 @@ RelationAssert topIsEqual(double value) =>
     _topIs(PropertyRelation.equal, value);
 
 /// Returns a [RelationAssert] which checks whether top is unequal [value].
-RelationAssert topIsUnEqual(double value) =>
-    _topIs(PropertyRelation.unEqual, value);
+RelationAssert topIsUnequal(double value) =>
+    _topIs(PropertyRelation.unequal, value);
 
 /// Returns a [RelationAssert] which checks whether top is greater than
 /// [value].
@@ -169,8 +151,8 @@ RelationAssert rightIsEqual(double value) =>
     _rightIs(PropertyRelation.equal, value);
 
 /// Returns a [RelationAssert] which checks whether right is unequal [value].
-RelationAssert rightIsUnEqual(double value) =>
-    _rightIs(PropertyRelation.unEqual, value);
+RelationAssert rightIsUnequal(double value) =>
+    _rightIs(PropertyRelation.unequal, value);
 
 /// Returns a [RelationAssert] which checks whether right is greater than
 /// [value].
@@ -197,8 +179,8 @@ RelationAssert bottomIsEqual(double value) =>
     _bottomIs(PropertyRelation.equal, value);
 
 /// Returns a [RelationAssert] which checks whether bottom is unequal [value].
-RelationAssert bottomIsUnEqual(double value) =>
-    _bottomIs(PropertyRelation.unEqual, value);
+RelationAssert bottomIsUnequal(double value) =>
+    _bottomIs(PropertyRelation.unequal, value);
 
 /// Returns a [RelationAssert] which checks whether bottom is greater than
 /// [value].

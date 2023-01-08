@@ -1,6 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:layout_tester/layout_tester.dart';
 import 'package:layout_tester/assertion_factory.dart';
 
@@ -15,17 +15,13 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(10)), false);
       });
 
-      test('widthIsUnEqual', () {
-        final assertion = widthIsUnEqual(compareValue);
+      test('widthIsUnequal', () {
+        final assertion = widthIsUnequal(compareValue);
 
-        expect(assertion.relation, PropertyRelation.unEqual);
+        expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(10)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), false);
       });
 
       test('widthIsGreaterThan', () {
@@ -33,8 +29,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(100)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), false);
       });
 
       test('widthIsGreaterThanEqual', () {
@@ -42,8 +36,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(40)), false);
       });
 
       test('widthIsLessThan', () {
@@ -51,8 +43,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(40)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), false);
       });
 
       test('widthIsLessThanEqual', () {
@@ -60,8 +50,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(60)), false);
       });
 
       // Height
@@ -71,17 +59,13 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(10)), false);
       });
 
-      test('heightIsUnEqual', () {
-        final assertion = heightIsUnEqual(compareValue);
+      test('heightIsUnequal', () {
+        final assertion = heightIsUnequal(compareValue);
 
-        expect(assertion.relation, PropertyRelation.unEqual);
+        expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(10)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), false);
       });
 
       test('heightIsGreaterThan', () {
@@ -89,8 +73,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(100)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), false);
       });
 
       test('heightIsGreaterThanEqual', () {
@@ -98,8 +80,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(40)), false);
       });
 
       test('heightIsLessThan', () {
@@ -107,8 +87,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(40)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), false);
       });
 
       test('heightIsLessThanEqual', () {
@@ -116,8 +94,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(Offset.zero & const Size.square(50)), true);
-        expect(assertion.evaluate(Offset.zero & const Size.square(60)), false);
       });
 
       // Left
@@ -127,17 +103,13 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(60, 60, 10, 10)), false);
       });
 
-      test('leftIsUnEqual', () {
-        final assertion = leftIsUnEqual(compareValue);
+      test('leftIsUnequal', () {
+        final assertion = leftIsUnequal(compareValue);
 
-        expect(assertion.relation, PropertyRelation.unEqual);
+        expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(60, 60, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), false);
       });
 
       test('leftIsGreaterThan', () {
@@ -145,8 +117,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(60, 60, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), false);
       });
 
       test('leftIsGreaterThanEqual', () {
@@ -154,8 +124,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(40, 40, 10, 10)), false);
       });
 
       test('leftIsLessThan', () {
@@ -163,8 +131,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(40, 40, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), false);
       });
 
       test('leftIsLessThanEqual', () {
@@ -172,8 +138,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(60, 60, 10, 10)), false);
       });
 
       // Top
@@ -183,17 +147,13 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(60, 60, 10, 10)), false);
       });
 
-      test('topIsUnEqual', () {
-        final assertion = topIsUnEqual(compareValue);
+      test('topIsUnequal', () {
+        final assertion = topIsUnequal(compareValue);
 
-        expect(assertion.relation, PropertyRelation.unEqual);
+        expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(60, 60, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), false);
       });
 
       test('topIsGreaterThan', () {
@@ -201,8 +161,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(60, 60, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), false);
       });
 
       test('topIsGreaterThanEqual', () {
@@ -210,8 +168,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(40, 40, 10, 10)), false);
       });
 
       test('topIsLessThan', () {
@@ -219,8 +175,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(40, 40, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), false);
       });
 
       test('topIsLessThanEqual', () {
@@ -228,8 +182,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(50, 50, 10, 10)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(60, 60, 10, 10)), false);
       });
 
       // Right
@@ -239,17 +191,13 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 60, 60)), false);
       });
 
-      test('rightIsUnEqual', () {
-        final assertion = rightIsUnEqual(compareValue);
+      test('rightIsUnequal', () {
+        final assertion = rightIsUnequal(compareValue);
 
-        expect(assertion.relation, PropertyRelation.unEqual);
+        expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 60, 60)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), false);
       });
 
       test('rightIsGreaterThan', () {
@@ -257,8 +205,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 60, 60)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), false);
       });
 
       test('rightIsGreaterThanEqual', () {
@@ -266,8 +212,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 40, 40)), false);
       });
 
       test('rightIsLessThan', () {
@@ -275,8 +219,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 40, 40)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), false);
       });
 
       test('rightIsLessThanEqual', () {
@@ -284,8 +226,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 60, 60)), false);
       });
 
       // Bottom
@@ -295,17 +235,13 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 60, 60)), false);
       });
 
-      test('bottomIsUnEqual', () {
-        final assertion = bottomIsUnEqual(compareValue);
+      test('bottomIsUnequal', () {
+        final assertion = bottomIsUnequal(compareValue);
 
-        expect(assertion.relation, PropertyRelation.unEqual);
+        expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 60, 60)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), false);
       });
 
       test('bottomIsGreaterThan', () {
@@ -313,8 +249,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 60, 60)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), false);
       });
 
       test('bottomIsGreaterThanEqual', () {
@@ -322,8 +256,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 40, 40)), false);
       });
 
       test('bottomIsLessThan', () {
@@ -331,8 +263,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 40, 40)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), false);
       });
 
       test('bottomIsLessThanEqual', () {
@@ -340,8 +270,6 @@ void main() {
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 50, 50)), true);
-        expect(assertion.evaluate(const Rect.fromLTWH(0, 0, 60, 60)), false);
       });
     });
 

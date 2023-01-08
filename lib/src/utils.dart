@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:flutter_test/flutter_test.dart';
+
 import 'extensions.dart';
 
 /// Checks whether one or no element in a provided list is not `null`.
@@ -10,3 +14,7 @@ bool oneOrNone(List values) =>
 ///
 /// Returns `true` if one or more elements in the provided list is set.
 bool atLeastOne(List values) => values.any((element) => element != null);
+
+/// Returns the size of the screen.
+Size getScreenSize(WidgetTester tester) =>
+    tester.binding.window.physicalSize / tester.binding.window.devicePixelRatio;

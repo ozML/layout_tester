@@ -1,13 +1,17 @@
 import 'dart:ui';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_test/flutter_test.dart' as ft;
+
 import 'package:layout_tester/src/trait_assert/assert.dart';
+import 'package:layout_tester/src/trait_assert/evaluator.dart';
+import 'package:layout_tester/src/widget_trait.dart';
 
 import 'base.dart';
 
 /// Describes the position of a widget targeted by [WidgetTrait].
 ///
 /// The positional information is relative to the test screen dimension.
-class PositionAssert extends TraitAssert with EquatableMixin {
+class PositionAssert extends GeneralTraitAssert with EquatableMixin {
   /// Creates an instance of [PositionAssert].
   const PositionAssert({
     this.left,
@@ -63,12 +67,20 @@ class PositionAssert extends TraitAssert with EquatableMixin {
 
   @override
   List<Object?> get props => [left, top, right, bottom];
+
+  @override
+  void evaluate(
+    ft.WidgetTester tester,
+    WidgetTrait trait,
+    List<WidgetTrait> rootTraits,
+  ) =>
+      PositionEvaluator.evaluate(tester, this, trait, rootTraits);
 }
 
 /// Describes the size of a widget targeted by [WidgetTrait].
 ///
 /// The dimensional information is relative to the test screen dimension.
-class SizeAssert extends TraitAssert with EquatableMixin {
+class SizeAssert extends GeneralTraitAssert with EquatableMixin {
   /// Creates an instance of [SizeAssert].
   const SizeAssert({
     this.width,
@@ -95,6 +107,14 @@ class SizeAssert extends TraitAssert with EquatableMixin {
 
   @override
   List<Object?> get props => [width, height];
+
+  @override
+  void evaluate(
+    ft.WidgetTester tester,
+    WidgetTrait trait,
+    List<WidgetTrait> rootTraits,
+  ) =>
+      SizeEvaluator.evaluate(tester, this, trait, rootTraits);
 }
 
 /// List of possible relations for [RelationAssert].
@@ -103,7 +123,7 @@ enum PropertyRelation {
   equal,
 
   /// Property is unequal value.
-  unEqual,
+  unequal,
 
   /// Property is greater than value.
   greaterThan,
@@ -122,7 +142,7 @@ enum PropertyRelation {
     switch (this) {
       case PropertyRelation.equal:
         return value == compareValue;
-      case PropertyRelation.unEqual:
+      case PropertyRelation.unequal:
         return value != compareValue;
       case PropertyRelation.greaterThan:
         return value > compareValue;
@@ -137,7 +157,7 @@ enum PropertyRelation {
 }
 
 /// Describes the state of a widget in relation to a specified value.
-class RelationAssert extends TraitAssert with EquatableMixin {
+class RelationAssert extends GeneralTraitAssert with EquatableMixin {
   /// Creates an instance of [RelationAssert].
   const RelationAssert({
     required this.relation,
@@ -154,9 +174,14 @@ class RelationAssert extends TraitAssert with EquatableMixin {
   /// The action to perform.
   final bool Function(Rect targetBounds, double value) action;
 
-  /// Invokes [action] with [value] and the provided bounds parameter.
-  bool evaluate(Rect targetBounds) => action(targetBounds, value);
-
   @override
   List<Object?> get props => [relation, value, action];
+
+  @override
+  void evaluate(
+    ft.WidgetTester tester,
+    WidgetTrait trait,
+    List<WidgetTrait> rootTraits,
+  ) =>
+      RelationEvaluator.evaluate(tester, this, trait, rootTraits);
 }

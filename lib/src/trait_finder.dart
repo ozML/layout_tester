@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart' as ft;
 import 'widget_trait.dart';
 
 /// Helper class which provides functions to handle operations regarding traits.
-class TraitHelper {
-  TraitHelper._();
+class TraitFinder {
+  TraitFinder._();
 
   /// Checks whether the widget is identified by the specified target ID.
   static bool isTarget(TargetId targetId, Widget widget) {

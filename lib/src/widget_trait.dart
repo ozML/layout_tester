@@ -18,6 +18,19 @@ class TargetId with EquatableMixin {
         ),
         customLocator = null;
 
+  /// Creates an instance of [TargetId] which accepts a [Type] input.
+  const TargetId.type(Type type, [int? elementIndex])
+      : this(type: type, elementIndex: elementIndex);
+
+  /// Creates an instance of [TargetId] which accepts a [Key] input.
+  const TargetId.key(Key key, [int? elementIndex])
+      : this(key: key, elementIndex: elementIndex);
+
+  /// Creates an instance of [TargetId] which accepts both a [Type] and a [Key]
+  /// input.
+  const TargetId.full(Type type, Key key, [int? elementIndex])
+      : this(type: type, key: key, elementIndex: elementIndex);
+
   /// Creates an instance of [TargetId] with a custom locator function.
   const TargetId.custom(WidgetLocator this.customLocator, {this.elementIndex})
       : type = null,

@@ -1,4 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_test/flutter_test.dart' as ft;
+
+import 'package:layout_tester/src/trait_assert/evaluator.dart';
 import 'package:layout_tester/src/widget_trait.dart';
 
 import 'base.dart';
@@ -192,6 +195,14 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
 
   @override
   List<Object?> get props => [traitId, ...getLTRB()];
+
+  @override
+  void evaluate(
+    ft.WidgetTester tester,
+    WidgetTrait trait,
+    List<WidgetTrait> rootTraits,
+  ) =>
+      RelativePositionEvaluator.evaluate(tester, this, trait, rootTraits);
 }
 
 /// Describes the relative size of a widget targeted by [WidgetTrait].
@@ -223,4 +234,12 @@ class RelativeSizeAssert extends RelativeTraitAssert with EquatableMixin {
 
   @override
   List<Object?> get props => [traitId, width, height];
+
+  @override
+  void evaluate(
+    ft.WidgetTester tester,
+    WidgetTrait trait,
+    List<WidgetTrait> rootTraits,
+  ) =>
+      RelativeSizeEvaluator.evaluate(tester, this, trait, rootTraits);
 }

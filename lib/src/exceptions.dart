@@ -184,7 +184,7 @@ String _relationText(PropertyRelation relation) {
   switch (relation) {
     case PropertyRelation.equal:
       return 'equal';
-    case PropertyRelation.unEqual:
+    case PropertyRelation.unequal:
       return 'unequal';
     case PropertyRelation.greaterThan:
       return 'greater than';

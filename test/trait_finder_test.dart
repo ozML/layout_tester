@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:layout_tester/layout_tester.dart';
-import 'package:layout_tester/src/trait_helper.dart';
 
 void main() {
   final rootTraits = [
@@ -54,25 +54,25 @@ void main() {
     ),
   ];
 
-  group('TraitHelper -', () {
+  group('TraitFinder -', () {
     // Matching
     test('isTarget', () {
       expect(
-        TraitHelper.isTarget(
+        TraitFinder.isTarget(
           const TargetId(key: Key('TEST')),
           Container(key: const Key('TEST')),
         ),
         true,
       );
       expect(
-        TraitHelper.isTarget(
+        TraitFinder.isTarget(
           const TargetId(type: Container),
           Container(),
         ),
         true,
       );
       expect(
-        TraitHelper.isTarget(
+        TraitFinder.isTarget(
           const TargetId(key: Key('TEST'), type: Container),
           Container(key: const Key('TEST')),
         ),
@@ -81,35 +81,35 @@ void main() {
 
       // Not matching
       expect(
-        TraitHelper.isTarget(
+        TraitFinder.isTarget(
           const TargetId(key: Key('TEST')),
           Container(key: const Key('TEST0')),
         ),
         false,
       );
       expect(
-        TraitHelper.isTarget(
+        TraitFinder.isTarget(
           const TargetId(type: SizedBox),
           Container(),
         ),
         false,
       );
       expect(
-        TraitHelper.isTarget(
+        TraitFinder.isTarget(
           const TargetId(key: Key('TEST'), type: Container),
           Container(key: const Key('TEST0')),
         ),
         false,
       );
       expect(
-        TraitHelper.isTarget(
+        TraitFinder.isTarget(
           const TargetId(key: Key('TEST'), type: SizedBox),
           Container(key: const Key('TEST')),
         ),
         false,
       );
       expect(
-        TraitHelper.isTarget(
+        TraitFinder.isTarget(
           const TargetId(key: Key('TEST'), type: SizedBox),
           Container(key: const Key('TEST0')),
         ),
@@ -127,7 +127,7 @@ void main() {
       ));
 
       expect(
-        TraitHelper.getTarget(
+        TraitFinder.getTarget(
           WidgetTrait(
             targetId: const TargetId(key: Key('#')),
             descendants: [
@@ -143,21 +143,21 @@ void main() {
 
       await tester.pumpWidget(Container(key: const Key('TEST')));
       expect(
-        TraitHelper.getTarget(
+        TraitFinder.getTarget(
           WidgetTrait(targetId: const TargetId(key: Key('TEST'))),
           tester: tester,
         ),
         isNotNull,
       );
       expect(
-        TraitHelper.getTarget(
+        TraitFinder.getTarget(
           WidgetTrait(targetId: const TargetId(type: Container)),
           tester: tester,
         ),
         isNotNull,
       );
       expect(
-        TraitHelper.getTarget(
+        TraitFinder.getTarget(
           WidgetTrait(
             targetId: const TargetId(key: Key('TEST'), type: Container),
           ),
@@ -168,7 +168,7 @@ void main() {
 
       // Not matching
       expect(
-        () => TraitHelper.getTarget(
+        () => TraitFinder.getTarget(
           WidgetTrait(
             targetId: const TargetId(key: Key('TEST0')),
           ),
@@ -177,14 +177,14 @@ void main() {
         throwsStateError,
       );
       expect(
-        () => TraitHelper.getTarget(
+        () => TraitFinder.getTarget(
           WidgetTrait(targetId: const TargetId(type: SizedBox)),
           tester: tester,
         ),
         throwsStateError,
       );
       expect(
-        () => TraitHelper.getTarget(
+        () => TraitFinder.getTarget(
           WidgetTrait(
             targetId: const TargetId(key: Key('TEST0'), type: Container),
           ),
@@ -193,7 +193,7 @@ void main() {
         throwsStateError,
       );
       expect(
-        () => TraitHelper.getTarget(
+        () => TraitFinder.getTarget(
           WidgetTrait(
             targetId: const TargetId(key: Key('TEST'), type: SizedBox),
           ),
@@ -202,7 +202,7 @@ void main() {
         throwsStateError,
       );
       expect(
-        () => TraitHelper.getTarget(
+        () => TraitFinder.getTarget(
           WidgetTrait(
             targetId: const TargetId(key: Key('TEST0'), type: SizedBox),
           ),
@@ -217,7 +217,7 @@ void main() {
 
       // Ancestor
       expect(
-        TraitHelper.findAncestorOf(trait, ancestorId: '1'),
+        TraitFinder.findAncestorOf(trait, ancestorId: '1'),
         isNotNull,
       );
 
@@ -225,19 +225,19 @@ void main() {
 
       // Other root
       expect(
-        TraitHelper.findAncestorOf(trait, ancestorId: '2'),
+        TraitFinder.findAncestorOf(trait, ancestorId: '2'),
         isNull,
       );
 
       // Self
       expect(
-        TraitHelper.findAncestorOf(trait, ancestorId: '1.0.0'),
+        TraitFinder.findAncestorOf(trait, ancestorId: '1.0.0'),
         isNull,
       );
 
       // Unknown
       expect(
-        TraitHelper.findAncestorOf(trait, ancestorId: 'x'),
+        TraitFinder.findAncestorOf(trait, ancestorId: 'x'),
         isNull,
       );
 
@@ -247,34 +247,34 @@ void main() {
 
       // Self
       expect(
-        TraitHelper.findAncestorOf(rootAncestor, ancestorId: '1'),
+        TraitFinder.findAncestorOf(rootAncestor, ancestorId: '1'),
         isNull,
       );
       // Descendant
       expect(
-        TraitHelper.findAncestorOf(rootAncestor, ancestorId: '1.0'),
+        TraitFinder.findAncestorOf(rootAncestor, ancestorId: '1.0'),
         isNull,
       );
       // Other root descendant
       expect(
-        TraitHelper.findAncestorOf(rootAncestor, ancestorId: '2.0'),
+        TraitFinder.findAncestorOf(rootAncestor, ancestorId: '2.0'),
         isNull,
       );
     });
 
     test('findRootAncestorOf', () {
       expect(
-        TraitHelper.findRootAncestorOf(rootTraits[0]),
+        TraitFinder.findRootAncestorOf(rootTraits[0]),
         isNull,
       );
       expect(
-        TraitHelper.findRootAncestorOf(
+        TraitFinder.findRootAncestorOf(
           rootTraits[1].descendants[0].descendants[0],
         ),
         rootTraits[1],
       );
       expect(
-        TraitHelper.findRootAncestorOf(rootTraits[2].descendants[0]),
+        TraitFinder.findRootAncestorOf(rootTraits[2].descendants[0]),
         rootTraits[2],
       );
     });
@@ -284,7 +284,7 @@ void main() {
 
       // Descendant
       expect(
-        TraitHelper.findDescendantOf(trait, descendantId: '1.0.0'),
+        TraitFinder.findDescendantOf(trait, descendantId: '1.0.0'),
         isNotNull,
       );
 
@@ -292,28 +292,28 @@ void main() {
 
       // Root ancestor
       expect(
-        TraitHelper.findDescendantOf(trait, descendantId: '1'),
+        TraitFinder.findDescendantOf(trait, descendantId: '1'),
         isNull,
       );
       // Other root
       expect(
-        TraitHelper.findDescendantOf(trait, descendantId: '2'),
+        TraitFinder.findDescendantOf(trait, descendantId: '2'),
         isNull,
       );
       // Other root descendant
       expect(
-        TraitHelper.findDescendantOf(trait, descendantId: '2.0'),
+        TraitFinder.findDescendantOf(trait, descendantId: '2.0'),
         isNull,
       );
       // Self
       expect(
-        TraitHelper.findDescendantOf(trait, descendantId: '1.0'),
+        TraitFinder.findDescendantOf(trait, descendantId: '1.0'),
         isNull,
       );
 
       // Unknown
       expect(
-        TraitHelper.findDescendantOf(trait, descendantId: 'x'),
+        TraitFinder.findDescendantOf(trait, descendantId: 'x'),
         isNull,
       );
     });
@@ -325,7 +325,7 @@ void main() {
 
       // Root parent
       expect(
-        TraitHelper.findUnrelated(
+        TraitFinder.findUnrelated(
           trait,
           traitId: '1',
           rootTraits: rootTraits,
@@ -334,7 +334,7 @@ void main() {
       );
       // Sibling
       expect(
-        TraitHelper.findUnrelated(
+        TraitFinder.findUnrelated(
           trait,
           traitId: '1.1',
           rootTraits: rootTraits,
@@ -343,7 +343,7 @@ void main() {
       );
       // Self
       expect(
-        TraitHelper.findUnrelated(
+        TraitFinder.findUnrelated(
           trait,
           traitId: '1.0',
           rootTraits: rootTraits,
@@ -352,7 +352,7 @@ void main() {
       );
       // Descendant
       expect(
-        TraitHelper.findUnrelated(
+        TraitFinder.findUnrelated(
           trait,
           traitId: '1.0.0',
           rootTraits: rootTraits,
@@ -364,7 +364,7 @@ void main() {
 
       // Other root
       expect(
-        TraitHelper.findUnrelated(
+        TraitFinder.findUnrelated(
           trait,
           traitId: '2',
           rootTraits: rootTraits,
@@ -373,7 +373,7 @@ void main() {
       );
       // Other root descendant
       expect(
-        TraitHelper.findUnrelated(
+        TraitFinder.findUnrelated(
           trait,
           traitId: '2.0',
           rootTraits: rootTraits,
@@ -383,7 +383,7 @@ void main() {
 
       // Unknown
       expect(
-        TraitHelper.findUnrelated(trait, traitId: 'x', rootTraits: rootTraits),
+        TraitFinder.findUnrelated(trait, traitId: 'x', rootTraits: rootTraits),
         isNull,
       );
 
@@ -393,7 +393,7 @@ void main() {
 
       // Self
       expect(
-        TraitHelper.findUnrelated(
+        TraitFinder.findUnrelated(
           rootAncestor,
           traitId: '1',
           rootTraits: rootTraits,
@@ -402,7 +402,7 @@ void main() {
       );
       // Descendant
       expect(
-        TraitHelper.findUnrelated(
+        TraitFinder.findUnrelated(
           rootAncestor,
           traitId: '1.0',
           rootTraits: rootTraits,
@@ -411,7 +411,7 @@ void main() {
       );
       // Other root descendant
       expect(
-        TraitHelper.findUnrelated(
+        TraitFinder.findUnrelated(
           rootAncestor,
           traitId: '2.0',
           rootTraits: rootTraits,
@@ -427,7 +427,7 @@ void main() {
 
       // Root ancestor
       expect(
-        TraitHelper.findNonIntersecting(
+        TraitFinder.findNonIntersecting(
           trait,
           traitId: '1',
           rootTraits: rootTraits,
@@ -436,7 +436,7 @@ void main() {
       );
       // Descendant
       expect(
-        TraitHelper.findNonIntersecting(
+        TraitFinder.findNonIntersecting(
           trait,
           traitId: '1.0.0',
           rootTraits: rootTraits,
@@ -445,7 +445,7 @@ void main() {
       );
       // Self
       expect(
-        TraitHelper.findNonIntersecting(
+        TraitFinder.findNonIntersecting(
           trait,
           traitId: '1.0',
           rootTraits: rootTraits,
@@ -457,7 +457,7 @@ void main() {
 
       // Far sibling
       expect(
-        TraitHelper.findNonIntersecting(
+        TraitFinder.findNonIntersecting(
           trait,
           traitId: '1.1.0',
           rootTraits: rootTraits,
@@ -466,7 +466,7 @@ void main() {
       );
       // Other root
       expect(
-        TraitHelper.findNonIntersecting(
+        TraitFinder.findNonIntersecting(
           trait,
           traitId: '2',
           rootTraits: rootTraits,
@@ -475,7 +475,7 @@ void main() {
       );
       // Other root descendant
       expect(
-        TraitHelper.findNonIntersecting(
+        TraitFinder.findNonIntersecting(
           trait,
           traitId: '2.0',
           rootTraits: rootTraits,
@@ -485,7 +485,7 @@ void main() {
 
       // Unknown
       expect(
-        TraitHelper.findNonIntersecting(
+        TraitFinder.findNonIntersecting(
           trait,
           traitId: 'x',
           rootTraits: rootTraits,
@@ -497,21 +497,21 @@ void main() {
     test('findTrait', () {
       // Known
       expect(
-        TraitHelper.findTrait(traitId: '1', rootTraits: rootTraits),
+        TraitFinder.findTrait(traitId: '1', rootTraits: rootTraits),
         isNotNull,
       );
       expect(
-        TraitHelper.findTrait(traitId: '1.1.0.0', rootTraits: rootTraits),
+        TraitFinder.findTrait(traitId: '1.1.0.0', rootTraits: rootTraits),
         isNotNull,
       );
       expect(
-        TraitHelper.findTrait(traitId: '2.0', rootTraits: rootTraits),
+        TraitFinder.findTrait(traitId: '2.0', rootTraits: rootTraits),
         isNotNull,
       );
 
       // Unkown
       expect(
-        TraitHelper.findTrait(traitId: 'x', rootTraits: rootTraits),
+        TraitFinder.findTrait(traitId: 'x', rootTraits: rootTraits),
         isNull,
       );
     });
