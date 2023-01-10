@@ -74,7 +74,12 @@ class PositionAssert extends GeneralTraitAssert with EquatableMixin {
     WidgetTrait trait,
     List<WidgetTrait> rootTraits,
   ) =>
-      PositionEvaluator.evaluate(tester, this, trait, rootTraits);
+      PositionEvaluator.evaluateAssert(
+        this,
+        tester: tester,
+        trait: trait,
+        rootTraits: rootTraits,
+      );
 }
 
 /// Describes the size of a widget targeted by [WidgetTrait].
@@ -114,7 +119,12 @@ class SizeAssert extends GeneralTraitAssert with EquatableMixin {
     WidgetTrait trait,
     List<WidgetTrait> rootTraits,
   ) =>
-      SizeEvaluator.evaluate(tester, this, trait, rootTraits);
+      SizeEvaluator.evaluateAssert(
+        this,
+        tester: tester,
+        trait: trait,
+        rootTraits: rootTraits,
+      );
 }
 
 /// List of possible relations for [RelationAssert].
@@ -159,11 +169,72 @@ enum PropertyRelation {
 /// Describes the state of a widget in relation to a specified value.
 class RelationAssert extends GeneralTraitAssert with EquatableMixin {
   /// Creates an instance of [RelationAssert].
-  const RelationAssert({
+  const RelationAssert._({
     required this.relation,
     required this.value,
     required this.action,
   });
+
+  /// Creates an instance of [RelationAssert] for the given property relation.
+  factory RelationAssert._propertyIs(
+    PropertyRelation relation,
+    double Function(Rect targetBounds) pGetter,
+    double value,
+  ) =>
+      RelationAssert._(
+        relation: relation,
+        value: value,
+        action: (targetBounds, value) =>
+            relation.evaluate(pGetter(targetBounds), value),
+      );
+
+  /// Creates an instance of [RelationAssert] for the width relation.
+  factory RelationAssert.widthIs(PropertyRelation relation, double value) =>
+      RelationAssert._propertyIs(
+        relation,
+        (targetBounds) => targetBounds.width,
+        value,
+      );
+
+  /// Creates an instance of [RelationAssert] for the height relation.
+  factory RelationAssert.heightIs(PropertyRelation relation, double value) =>
+      RelationAssert._propertyIs(
+        relation,
+        (targetBounds) => targetBounds.height,
+        value,
+      );
+
+  /// Creates an instance of [RelationAssert] for the left relation.
+  factory RelationAssert.leftIs(PropertyRelation relation, double value) =>
+      RelationAssert._propertyIs(
+        relation,
+        (targetBounds) => targetBounds.left,
+        value,
+      );
+
+  /// Creates an instance of [RelationAssert] for the top relation.
+  factory RelationAssert.topIs(PropertyRelation relation, double value) =>
+      RelationAssert._propertyIs(
+        relation,
+        (targetBounds) => targetBounds.top,
+        value,
+      );
+
+  /// Creates an instance of [RelationAssert] for the right relation.
+  factory RelationAssert.rightIs(PropertyRelation relation, double value) =>
+      RelationAssert._propertyIs(
+        relation,
+        (targetBounds) => targetBounds.right,
+        value,
+      );
+
+  /// Creates an instance of [RelationAssert] for the bottom relation.
+  factory RelationAssert.bottomIs(PropertyRelation relation, double value) =>
+      RelationAssert._propertyIs(
+        relation,
+        (targetBounds) => targetBounds.bottom,
+        value,
+      );
 
   /// The treated relation.
   final PropertyRelation relation;
@@ -183,5 +254,10 @@ class RelationAssert extends GeneralTraitAssert with EquatableMixin {
     WidgetTrait trait,
     List<WidgetTrait> rootTraits,
   ) =>
-      RelationEvaluator.evaluate(tester, this, trait, rootTraits);
+      RelationEvaluator.evaluateAssert(
+        this,
+        tester: tester,
+        trait: trait,
+        rootTraits: rootTraits,
+      );
 }

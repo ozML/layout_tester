@@ -202,7 +202,12 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
     WidgetTrait trait,
     List<WidgetTrait> rootTraits,
   ) =>
-      RelativePositionEvaluator.evaluate(tester, this, trait, rootTraits);
+      RelativePositionEvaluator.evaluateAssert(
+        this,
+        tester: tester,
+        trait: trait,
+        rootTraits: rootTraits,
+      );
 }
 
 /// Describes the relative size of a widget targeted by [WidgetTrait].
@@ -241,5 +246,10 @@ class RelativeSizeAssert extends RelativeTraitAssert with EquatableMixin {
     WidgetTrait trait,
     List<WidgetTrait> rootTraits,
   ) =>
-      RelativeSizeEvaluator.evaluate(tester, this, trait, rootTraits);
+      RelativeSizeEvaluator.evaluateAssert(
+        this,
+        tester: tester,
+        trait: trait,
+        rootTraits: rootTraits,
+      );
 }

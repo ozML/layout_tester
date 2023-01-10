@@ -14,12 +14,12 @@ class PositionEvaluator {
   PositionEvaluator._();
 
   /// Evaluates [traitAssert].
-  static void evaluate(
-    ft.WidgetTester tester,
-    PositionAssert traitAssert,
-    WidgetTrait trait,
-    List<WidgetTrait> rootTraits,
-  ) {
+  static void evaluateAssert(
+    PositionAssert traitAssert, {
+    required ft.WidgetTester tester,
+    required WidgetTrait trait,
+    required List<WidgetTrait> rootTraits,
+  }) {
     final target = TraitFinder.getTarget(trait, tester: tester);
     final targetBounds = tester.getRect(ft.find.byWidget(target));
 
@@ -64,12 +64,12 @@ class SizeEvaluator {
   SizeEvaluator._();
 
   /// Evaluates [traitAssert].
-  static void evaluate(
-    ft.WidgetTester tester,
-    SizeAssert traitAssert,
-    WidgetTrait trait,
-    List<WidgetTrait> rootTraits,
-  ) {
+  static void evaluateAssert(
+    SizeAssert traitAssert, {
+    required ft.WidgetTester tester,
+    required WidgetTrait trait,
+    required List<WidgetTrait> rootTraits,
+  }) {
     final target = TraitFinder.getTarget(trait, tester: tester);
     final targetSize = tester.getSize(ft.find.byWidget(target));
 
@@ -100,12 +100,12 @@ class RelationEvaluator {
   RelationEvaluator._();
 
   /// Evaluates [traitAssert].
-  static void evaluate(
-    ft.WidgetTester tester,
-    RelationAssert traitAssert,
-    WidgetTrait trait,
-    List<WidgetTrait> rootTraits,
-  ) {
+  static void evaluateAssert(
+    RelationAssert traitAssert, {
+    required ft.WidgetTester tester,
+    required WidgetTrait trait,
+    required List<WidgetTrait> rootTraits,
+  }) {
     final target = TraitFinder.getTarget(trait, tester: tester);
     final targetBounds = tester.getRect(ft.find.byWidget(target));
 
@@ -126,12 +126,12 @@ class RelativePositionEvaluator {
   RelativePositionEvaluator._();
 
   /// Evaluates [traitAssert].
-  static void evaluate(
-    ft.WidgetTester tester,
-    RelativePositionAssert traitAssert,
-    WidgetTrait trait,
-    List<WidgetTrait> rootTraits,
-  ) {
+  static void evaluateAssert(
+    RelativePositionAssert traitAssert, {
+    required ft.WidgetTester tester,
+    required WidgetTrait trait,
+    required List<WidgetTrait> rootTraits,
+  }) {
     if (atLeastOne(traitAssert.getLTRB())) {
       if (traitAssert.refersTo == PositionReference.target) {
         _evaluateTarget(tester, traitAssert, trait, rootTraits);
@@ -380,12 +380,12 @@ class RelativeSizeEvaluator {
   RelativeSizeEvaluator._();
 
   /// Evaluates [traitAssert].
-  static void evaluate(
-    ft.WidgetTester tester,
-    RelativeSizeAssert traitAssert,
-    WidgetTrait trait,
-    List<WidgetTrait> rootTraits,
-  ) {
+  static void evaluateAssert(
+    RelativeSizeAssert traitAssert, {
+    required ft.WidgetTester tester,
+    required WidgetTrait trait,
+    required List<WidgetTrait> rootTraits,
+  }) {
     final target = TraitFinder.getTarget(trait, tester: tester);
     final targetSize = tester.getSize(ft.find.byWidget(target));
     final compareTrait = TraitFinder.findTrait(
