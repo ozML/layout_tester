@@ -121,6 +121,11 @@ class RelationEvaluator {
   }
 }
 
+extension _RelativePositionAssertExtension on RelativePositionAssert {
+  /// Gets the absolute value of [value], if [isAbsolute] is `true`.
+  double absIf(double value) => isAbsolute ? value.abs() : value;
+}
+
 /// Contains evaluation logic for [RelativePositionAssert].
 class RelativePositionEvaluator {
   RelativePositionEvaluator._();
@@ -167,27 +172,31 @@ class RelativePositionEvaluator {
     final refBounds = tester.getRect(ft.find.byWidget(refTarget));
 
     final left = traitAssert.left;
+    final leftValue = traitAssert.absIf(targetBounds.left - refBounds.right);
     DoublePair? leftFail;
-    if (left != null && left != targetBounds.left - refBounds.right) {
-      leftFail = DoublePair(targetBounds.left - refBounds.right, left);
+    if (left != null && left != leftValue) {
+      leftFail = DoublePair(leftValue, left);
     }
 
     final top = traitAssert.top;
+    final topValue = traitAssert.absIf(targetBounds.top - refBounds.bottom);
     DoublePair? topFail;
-    if (top != null && top != targetBounds.top - refBounds.bottom) {
-      topFail = DoublePair(targetBounds.top - refBounds.bottom, top);
+    if (top != null && top != topValue) {
+      topFail = DoublePair(topValue, top);
     }
 
     final right = traitAssert.right;
+    final rightValue = traitAssert.absIf(refBounds.left - targetBounds.right);
     DoublePair? rightFail;
-    if (right != null && right != refBounds.left - targetBounds.right) {
-      rightFail = DoublePair(refBounds.left - targetBounds.right, right);
+    if (right != null && right != rightValue) {
+      rightFail = DoublePair(rightValue, right);
     }
 
     final bottom = traitAssert.bottom;
+    final bottomValue = traitAssert.absIf(refBounds.top - targetBounds.bottom);
     DoublePair? bottomFail;
-    if (bottom != null && bottom != refBounds.top - targetBounds.bottom) {
-      bottomFail = DoublePair(refBounds.top - targetBounds.bottom, bottom);
+    if (bottom != null && bottom != bottomValue) {
+      bottomFail = DoublePair(bottomValue, bottom);
     }
 
     if (atLeastOne([leftFail, topFail, rightFail, bottomFail])) {
@@ -267,29 +276,35 @@ class RelativePositionEvaluator {
     );
 
     final left = traitAssert.left;
+    final leftValue = traitAssert.absIf(localBounds.left);
     DoublePair? leftFail;
-    if (left != null && left != localBounds.left) {
-      leftFail = DoublePair(localBounds.left, left);
+    if (left != null && left != leftValue) {
+      leftFail = DoublePair(leftValue, left);
     }
 
     final top = traitAssert.top;
+    final topValue = traitAssert.absIf(localBounds.top);
     DoublePair? topFail;
-    if (top != null && top != localBounds.top) {
-      topFail = DoublePair(localBounds.top, top);
+    if (top != null && top != topValue) {
+      topFail = DoublePair(topValue, top);
     }
 
     final right = traitAssert.right;
+    final rightValue = traitAssert.absIf(
+      ancestorBounds.width - localBounds.right,
+    );
     DoublePair? rightFail;
-    if (right != null && right != ancestorBounds.width - localBounds.right) {
-      rightFail = DoublePair(ancestorBounds.width - localBounds.right, right);
+    if (right != null && right != rightValue) {
+      rightFail = DoublePair(rightValue, right);
     }
 
     final bottom = traitAssert.bottom;
+    final bottomValue = traitAssert.absIf(
+      ancestorBounds.height - localBounds.bottom,
+    );
     DoublePair? bottomFail;
-    if (bottom != null &&
-        bottom != ancestorBounds.height - localBounds.bottom) {
-      bottomFail =
-          DoublePair(ancestorBounds.height - localBounds.bottom, bottom);
+    if (bottom != null && bottom != bottomValue) {
+      bottomFail = DoublePair(bottomValue, bottom);
     }
 
     if (atLeastOne([leftFail, topFail, rightFail, bottomFail])) {
@@ -313,28 +328,35 @@ class RelativePositionEvaluator {
     final globalBounds = Offset.zero & getScreenSize(tester);
 
     final left = traitAssert.left;
+    final leftValue = traitAssert.absIf(targetBounds.left);
     DoublePair? leftFail;
-    if (left != null && left != targetBounds.left) {
-      leftFail = DoublePair(targetBounds.left, left);
+    if (left != null && left != leftValue) {
+      leftFail = DoublePair(leftValue, left);
     }
 
     final top = traitAssert.top;
+    final topValue = traitAssert.absIf(targetBounds.top);
     DoublePair? topFail;
-    if (top != null && top != targetBounds.top) {
-      topFail = DoublePair(targetBounds.top, top);
+    if (top != null && top != topValue) {
+      topFail = DoublePair(topValue, top);
     }
 
     final right = traitAssert.right;
+    final rightValue = traitAssert.absIf(
+      globalBounds.width - targetBounds.right,
+    );
     DoublePair? rightFail;
-    if (right != null && right != globalBounds.width - targetBounds.right) {
-      rightFail = DoublePair(globalBounds.width - targetBounds.right, right);
+    if (right != null && right != rightValue) {
+      rightFail = DoublePair(rightValue, right);
     }
 
     final bottom = traitAssert.bottom;
+    final bottomValue = traitAssert.absIf(
+      globalBounds.height - targetBounds.bottom,
+    );
     DoublePair? bottomFail;
-    if (bottom != null && bottom != globalBounds.height - targetBounds.bottom) {
-      bottomFail =
-          DoublePair(globalBounds.height - targetBounds.bottom, bottom);
+    if (bottom != null && bottom != bottomValue) {
+      bottomFail = DoublePair(bottomValue, bottom);
     }
 
     if (atLeastOne([leftFail, topFail, rightFail, bottomFail])) {

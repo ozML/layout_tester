@@ -52,6 +52,7 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
     this.top,
     this.right,
     this.bottom,
+    this.isAbsolute = true,
   });
 
   /// Creates an instance of [RelativePositionAssert] which refers to the
@@ -71,6 +72,7 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
     double? top,
     double? right,
     double? bottom,
+    bool isAbsolute = true,
   }) : this._(
           traitId: traitId,
           refersTo: PositionReference.target,
@@ -78,6 +80,7 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
           top: top,
           right: right,
           bottom: bottom,
+          isAbsolute: isAbsolute,
         );
 
   /// Creates an instance of [RelativePositionAssert] which refers to the
@@ -113,6 +116,7 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
     double? top,
     double? right,
     double? bottom,
+    bool isAbsolute = true,
   }) : this._(
           traitId: traitId,
           refersTo: PositionReference.parentBounds,
@@ -120,6 +124,7 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
           top: top,
           right: right,
           bottom: bottom,
+          isAbsolute: isAbsolute,
         );
 
   /// Creates an instance of [RelativePositionAssert] which refers to the
@@ -136,6 +141,7 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
     double? top,
     double? right,
     double? bottom,
+    bool isAbsolute = true,
   }) : this._(
           traitId: '',
           refersTo: PositionReference.globalBounds,
@@ -143,6 +149,7 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
           top: top,
           right: right,
           bottom: bottom,
+          isAbsolute: isAbsolute,
         );
 
   /// Creates an instance of [RelativePositionAssert] which describes a position
@@ -189,12 +196,18 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
   /// Offset to the bottom border of the scope.
   final double? bottom;
 
+  /// Determines whether the calculated distance is an absolute value.
+  ///
+  /// When set to `false` the value can become negative, if the targeted outer
+  /// sides of the bounds aren't facing each other.
+  final bool isAbsolute;
+
   /// Returns the values for [left], [top], [right]
   /// and [bottom] in a list.
   List<double?> getLTRB() => [left, top, right, bottom];
 
   @override
-  List<Object?> get props => [traitId, ...getLTRB()];
+  List<Object?> get props => [traitId, ...getLTRB(), isAbsolute];
 
   @override
   void evaluate(
