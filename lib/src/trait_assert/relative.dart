@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart' as ft;
 
 import 'package:layout_tester/src/trait_assert/evaluator.dart';
@@ -43,7 +42,7 @@ enum PositionReference {
 /// different possibilities.
 ///
 ///- See [PositionReference].
-class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
+class RelativePositionAssert extends RelativeTraitAssert {
   /// Creates an instance of [RelativePositionAssert].
   const RelativePositionAssert._({
     required this.refersTo,
@@ -227,7 +226,7 @@ class RelativePositionAssert extends RelativeTraitAssert with EquatableMixin {
 ///
 /// Contrary to [SizeAssert] the dimensional information in here is relative
 /// to a specific trait instance identified by [traitId].
-class RelativeSizeAssert extends RelativeTraitAssert with EquatableMixin {
+class RelativeSizeAssert extends RelativeTraitAssert {
   /// Creates an instance of [RelativeSizeAssert].
   const RelativeSizeAssert({
     required super.traitId,

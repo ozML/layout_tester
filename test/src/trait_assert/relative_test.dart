@@ -99,20 +99,20 @@ void main() {
           );
         }
 
-        tester.binding.window.physicalSizeTestValue = const Size(600, 600);
-        tester.binding.window.devicePixelRatioTestValue = 1;
+        tester.view.physicalSize = const Size(600, 600);
+        tester.view.devicePixelRatio = 1;
         addTearDown(() {
-          tester.binding.window.clearPhysicalSizeTestValue();
-          tester.binding.window.clearDevicePixelRatioTestValue();
+          tester.view.resetPhysicalSize();
+          tester.view.resetDevicePixelRatio();
         });
 
         await tester.pumpWidget(
-          MaterialApp(
+          const MaterialApp(
             home: Row(
               children: [
                 Expanded(
                   child: Column(
-                    children: const [
+                    children: [
                       Expanded(
                         child: Center(
                           child: SizedBox.square(
@@ -142,7 +142,7 @@ void main() {
                 ),
                 Expanded(
                   child: Column(
-                    children: const [
+                    children: [
                       Expanded(
                         child: Center(
                           child: SizedBox.square(
@@ -173,7 +173,7 @@ void main() {
                 ),
                 Expanded(
                   child: Column(
-                    children: const [
+                    children: [
                       Expanded(
                         child: Center(
                           child: SizedBox.square(
@@ -472,9 +472,9 @@ void main() {
       }
 
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Row(
-            children: const [
+            children: [
               Expanded(
                 child: Center(
                   child: SizedBox(width: 50, height: 50),

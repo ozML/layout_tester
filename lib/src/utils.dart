@@ -17,4 +17,4 @@ bool atLeastOne(List values) => values.any((element) => element != null);
 
 /// Returns the size of the screen.
 Size getScreenSize(WidgetTester tester) =>
-    tester.binding.window.physicalSize / tester.binding.window.devicePixelRatio;
+    tester.view.physicalSize / tester.view.devicePixelRatio;

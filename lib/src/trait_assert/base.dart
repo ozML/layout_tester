@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart' as ft;
 
 import 'package:layout_tester/src/widget_trait.dart';
 import 'package:layout_tester/src/exceptions.dart';
 
 /// Base class for assertions on [WidgetTrait].
-abstract class TraitAssert {
+abstract class TraitAssert with EquatableMixin {
   /// Creates an instance of [TraitAssert].
   const TraitAssert();
 

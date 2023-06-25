@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart' as ft;
 
 import 'package:layout_tester/src/trait_assert/assert.dart';
@@ -11,7 +10,7 @@ import 'base.dart';
 /// Describes the position of a widget targeted by [WidgetTrait].
 ///
 /// The positional information is relative to the test screen dimension.
-class PositionAssert extends GeneralTraitAssert with EquatableMixin {
+class PositionAssert extends GeneralTraitAssert {
   /// Creates an instance of [PositionAssert].
   const PositionAssert({
     this.left,
@@ -85,7 +84,7 @@ class PositionAssert extends GeneralTraitAssert with EquatableMixin {
 /// Describes the size of a widget targeted by [WidgetTrait].
 ///
 /// The dimensional information is relative to the test screen dimension.
-class SizeAssert extends GeneralTraitAssert with EquatableMixin {
+class SizeAssert extends GeneralTraitAssert {
   /// Creates an instance of [SizeAssert].
   const SizeAssert({
     this.width,
@@ -167,7 +166,7 @@ enum PropertyRelation {
 }
 
 /// Describes the state of a widget in relation to a specified value.
-class RelationAssert extends GeneralTraitAssert with EquatableMixin {
+class RelationAssert extends GeneralTraitAssert {
   /// Creates an instance of [RelationAssert].
   const RelationAssert._({
     required this.relation,

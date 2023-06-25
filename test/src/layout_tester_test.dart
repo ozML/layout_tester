@@ -76,4 +76,7 @@ class TestCustomTraitAssert extends CustomTraitAssert {
     List<WidgetTrait> rootTraits,
   ) =>
       testAction(tester, trait, rootTraits);
+
+  @override
+  List<Object?> get props => [];
 }

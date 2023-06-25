@@ -11,42 +11,43 @@ void main() {
       // Width
 
       test('widthIsEqual', () {
-        final assertion = widthIsEqual(compareValue);
+        final assertion = widthIsEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
       });
 
       test('widthIsUnequal', () {
-        final assertion = widthIsUnequal(compareValue);
+        final assertion = widthIsUnequal(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
       });
 
       test('widthIsGreaterThan', () {
-        final assertion = widthIsGreaterThan(compareValue);
+        final assertion = widthIsGreaterThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
       });
 
       test('widthIsGreaterThanEqual', () {
-        final assertion = widthIsGreaterThanEqual(compareValue);
+        final assertion =
+            widthIsGreaterThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
       });
 
       test('widthIsLessThan', () {
-        final assertion = widthIsLessThan(compareValue);
+        final assertion = widthIsLessThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
       });
 
       test('widthIsLessThanEqual', () {
-        final assertion = widthIsLessThanEqual(compareValue);
+        final assertion = widthIsLessThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
@@ -55,42 +56,43 @@ void main() {
       // Height
 
       test('heightIsEqual', () {
-        final assertion = heightIsEqual(compareValue);
+        final assertion = heightIsEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
       });
 
       test('heightIsUnequal', () {
-        final assertion = heightIsUnequal(compareValue);
+        final assertion = heightIsUnequal(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
       });
 
       test('heightIsGreaterThan', () {
-        final assertion = heightIsGreaterThan(compareValue);
+        final assertion = heightIsGreaterThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
       });
 
       test('heightIsGreaterThanEqual', () {
-        final assertion = heightIsGreaterThanEqual(compareValue);
+        final assertion =
+            heightIsGreaterThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
       });
 
       test('heightIsLessThan', () {
-        final assertion = heightIsLessThan(compareValue);
+        final assertion = heightIsLessThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
       });
 
       test('heightIsLessThanEqual', () {
-        final assertion = heightIsLessThanEqual(compareValue);
+        final assertion = heightIsLessThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
@@ -99,42 +101,43 @@ void main() {
       // Left
 
       test('leftIsEqual', () {
-        final assertion = leftIsEqual(compareValue);
+        final assertion = leftIsEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
       });
 
       test('leftIsUnequal', () {
-        final assertion = leftIsUnequal(compareValue);
+        final assertion = leftIsUnequal(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
       });
 
       test('leftIsGreaterThan', () {
-        final assertion = leftIsGreaterThan(compareValue);
+        final assertion = leftIsGreaterThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
       });
 
       test('leftIsGreaterThanEqual', () {
-        final assertion = leftIsGreaterThanEqual(compareValue);
+        final assertion =
+            leftIsGreaterThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
       });
 
       test('leftIsLessThan', () {
-        final assertion = leftIsLessThan(compareValue);
+        final assertion = leftIsLessThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
       });
 
       test('leftIsLessThanEqual', () {
-        final assertion = leftIsLessThanEqual(compareValue);
+        final assertion = leftIsLessThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
@@ -143,42 +146,42 @@ void main() {
       // Top
 
       test('topIsEqual', () {
-        final assertion = topIsEqual(compareValue);
+        final assertion = topIsEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
       });
 
       test('topIsUnequal', () {
-        final assertion = topIsUnequal(compareValue);
+        final assertion = topIsUnequal(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
       });
 
       test('topIsGreaterThan', () {
-        final assertion = topIsGreaterThan(compareValue);
+        final assertion = topIsGreaterThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
       });
 
       test('topIsGreaterThanEqual', () {
-        final assertion = topIsGreaterThanEqual(compareValue);
+        final assertion = topIsGreaterThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
       });
 
       test('topIsLessThan', () {
-        final assertion = topIsLessThan(compareValue);
+        final assertion = topIsLessThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
       });
 
       test('topIsLessThanEqual', () {
-        final assertion = topIsLessThanEqual(compareValue);
+        final assertion = topIsLessThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
@@ -187,42 +190,43 @@ void main() {
       // Right
 
       test('rightIsEqual', () {
-        final assertion = rightIsEqual(compareValue);
+        final assertion = rightIsEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
       });
 
       test('rightIsUnequal', () {
-        final assertion = rightIsUnequal(compareValue);
+        final assertion = rightIsUnequal(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
       });
 
       test('rightIsGreaterThan', () {
-        final assertion = rightIsGreaterThan(compareValue);
+        final assertion = rightIsGreaterThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
       });
 
       test('rightIsGreaterThanEqual', () {
-        final assertion = rightIsGreaterThanEqual(compareValue);
+        final assertion =
+            rightIsGreaterThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
       });
 
       test('rightIsLessThan', () {
-        final assertion = rightIsLessThan(compareValue);
+        final assertion = rightIsLessThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
       });
 
       test('rightIsLessThanEqual', () {
-        final assertion = rightIsLessThanEqual(compareValue);
+        final assertion = rightIsLessThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
@@ -231,42 +235,43 @@ void main() {
       // Bottom
 
       test('bottomIsEqual', () {
-        final assertion = bottomIsEqual(compareValue);
+        final assertion = bottomIsEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.equal);
         expect(assertion.value, compareValue);
       });
 
       test('bottomIsUnequal', () {
-        final assertion = bottomIsUnequal(compareValue);
+        final assertion = bottomIsUnequal(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.unequal);
         expect(assertion.value, compareValue);
       });
 
       test('bottomIsGreaterThan', () {
-        final assertion = bottomIsGreaterThan(compareValue);
+        final assertion = bottomIsGreaterThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThan);
         expect(assertion.value, compareValue);
       });
 
       test('bottomIsGreaterThanEqual', () {
-        final assertion = bottomIsGreaterThanEqual(compareValue);
+        final assertion =
+            bottomIsGreaterThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.greaterThanEqual);
         expect(assertion.value, compareValue);
       });
 
       test('bottomIsLessThan', () {
-        final assertion = bottomIsLessThan(compareValue);
+        final assertion = bottomIsLessThan(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThan);
         expect(assertion.value, compareValue);
       });
 
       test('bottomIsLessThanEqual', () {
-        final assertion = bottomIsLessThanEqual(compareValue);
+        final assertion = bottomIsLessThanEqual(compareValue) as RelationAssert;
 
         expect(assertion.relation, PropertyRelation.lessThanEqual);
         expect(assertion.value, compareValue);
@@ -290,27 +295,28 @@ void main() {
       }
 
       test('hasLeft', () {
-        final assertion = hasLeft(input);
+        final assertion = hasLeft(input) as PositionAssert;
         checkPosition(assertion, left: input);
       });
 
       test('hasTop', () {
-        final assertion = hasTop(input);
+        final assertion = hasTop(input) as PositionAssert;
         checkPosition(assertion, top: input);
       });
 
       test('hasRight', () {
-        final assertion = hasRight(input);
+        final assertion = hasRight(input) as PositionAssert;
         checkPosition(assertion, right: input);
       });
 
       test('hasBottom', () {
-        final assertion = hasBottom(input);
+        final assertion = hasBottom(input) as PositionAssert;
         checkPosition(assertion, bottom: input);
       });
 
       test('hasPosition', () {
-        final assertion = hasPosition(input, input, input, input);
+        final assertion =
+            hasPosition(input, input, input, input) as PositionAssert;
         checkPosition(
           assertion,
           left: input,
@@ -321,18 +327,20 @@ void main() {
       });
 
       test('hasLocation', () {
-        final assertion = hasLocation(input, input);
+        final assertion = hasLocation(input, input) as PositionAssert;
         checkPosition(assertion, left: input, top: input);
       });
 
       test('hasOffset', () {
-        final assertion = hasOffset(const Offset(input, input));
+        final assertion =
+            hasOffset(const Offset(input, input)) as PositionAssert;
         checkPosition(assertion, left: input, top: input);
       });
 
       test('hasBounds', () {
         final assertion =
-            hasBounds(const Rect.fromLTRB(input, input, input * 2, input * 2));
+            hasBounds(const Rect.fromLTRB(input, input, input * 2, input * 2))
+                as PositionAssert;
         checkPosition(
           assertion,
           left: input,
@@ -356,22 +364,22 @@ void main() {
       }
 
       test('hasSize', () {
-        final assertion = hasSize(input, input);
+        final assertion = hasSize(input, input) as SizeAssert;
         checkSize(assertion, width: input, height: input);
       });
 
       test('hasDimension', () {
-        final assertion = hasDimension(const Size.square(input));
+        final assertion = hasDimension(const Size.square(input)) as SizeAssert;
         checkSize(assertion, width: input, height: input);
       });
 
       test('hasWidth', () {
-        final assertion = hasWidth(input);
+        final assertion = hasWidth(input) as SizeAssert;
         checkSize(assertion, width: input);
       });
 
       test('hasHeight', () {
-        final assertion = hasHeight(input);
+        final assertion = hasHeight(input) as SizeAssert;
         checkSize(assertion, height: input);
       });
     });
@@ -400,7 +408,8 @@ void main() {
       // Target distance
 
       test('hasLeftDistanceTo', () {
-        final assertion = hasLeftDistanceTo(input, id);
+        final assertion =
+            hasLeftDistanceTo(input, id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.target,
@@ -410,7 +419,7 @@ void main() {
       });
 
       test('hasTopDistanceTo', () {
-        final assertion = hasTopDistanceTo(input, id);
+        final assertion = hasTopDistanceTo(input, id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.target,
@@ -420,7 +429,8 @@ void main() {
       });
 
       test('hasRightDistanceTo', () {
-        final assertion = hasRightDistanceTo(input, id);
+        final assertion =
+            hasRightDistanceTo(input, id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.target,
@@ -430,7 +440,8 @@ void main() {
       });
 
       test('hasBottomDistanceTo', () {
-        final assertion = hasBottomDistanceTo(input, id);
+        final assertion =
+            hasBottomDistanceTo(input, id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.target,
@@ -441,8 +452,9 @@ void main() {
 
       // Local positioning
 
-      test('hasLocalLeft', () {
-        final assertion = hasLocalLeft(input, id);
+      test('hasLeft', () {
+        final assertion =
+            hasLeft(input, parentTraitId: id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parent,
@@ -451,8 +463,9 @@ void main() {
         );
       });
 
-      test('hasLocalTop', () {
-        final assertion = hasLocalTop(input, id);
+      test('hasTop', () {
+        final assertion =
+            hasTop(input, parentTraitId: id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parent,
@@ -461,8 +474,9 @@ void main() {
         );
       });
 
-      test('hasLocalRight', () {
-        final assertion = hasLocalRight(input, id);
+      test('hasRight', () {
+        final assertion =
+            hasRight(input, parentTraitId: id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parent,
@@ -471,8 +485,9 @@ void main() {
         );
       });
 
-      test('hasLocalBottom', () {
-        final assertion = hasLocalBottom(input, id);
+      test('hasBottom', () {
+        final assertion =
+            hasBottom(input, parentTraitId: id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parent,
@@ -481,8 +496,10 @@ void main() {
         );
       });
 
-      test('hasLocalPosition', () {
-        final assertion = hasLocalPosition(input, input, input, input, id);
+      test('hasPosition', () {
+        final assertion =
+            hasPosition(input, input, input, input, parentTraitId: id)
+                as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parent,
@@ -494,8 +511,9 @@ void main() {
         );
       });
 
-      test('hasLocalLocation', () {
-        final assertion = hasLocalLocation(input, input, id);
+      test('hasLocation', () {
+        final assertion = hasLocation(input, input, parentTraitId: id)
+            as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parent,
@@ -505,8 +523,10 @@ void main() {
         );
       });
 
-      test('hasLocalOffset', () {
-        final assertion = hasLocalOffset(const Offset(input, input), id);
+      test('hasOffset', () {
+        final assertion =
+            hasOffset(const Offset(input, input), parentTraitId: id)
+                as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parent,
@@ -516,11 +536,11 @@ void main() {
         );
       });
 
-      test('hasLocalBounds', () {
-        final assertion = hasLocalBounds(
+      test('hasBounds', () {
+        final assertion = hasBounds(
           const Rect.fromLTRB(input, input, input * 2, input * 2),
-          id,
-        );
+          parentTraitId: id,
+        ) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parent,
@@ -534,8 +554,9 @@ void main() {
 
       // Local distance
 
-      test('hasLocalLeftDistance', () {
-        final assertion = hasLocalLeftDistance(input, id);
+      test('hasLeftDistance', () {
+        final assertion =
+            hasLeftDistance(input, parentTraitId: id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parentBounds,
@@ -544,8 +565,9 @@ void main() {
         );
       });
 
-      test('hasLocalTopDistance', () {
-        final assertion = hasLocalTopDistance(input, id);
+      test('hasTopDistance', () {
+        final assertion =
+            hasTopDistance(input, parentTraitId: id) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parentBounds,
@@ -554,8 +576,9 @@ void main() {
         );
       });
 
-      test('hasLocalRightDistance', () {
-        final assertion = hasLocalRightDistance(input, id);
+      test('hasRightDistance', () {
+        final assertion = hasRightDistance(input, parentTraitId: id)
+            as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parentBounds,
@@ -564,8 +587,9 @@ void main() {
         );
       });
 
-      test('hasLocalBottomDistance', () {
-        final assertion = hasLocalBottomDistance(input, id);
+      test('hasBottomDistance', () {
+        final assertion = hasBottomDistance(input, parentTraitId: id)
+            as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.parentBounds,
@@ -577,7 +601,7 @@ void main() {
       // Global distance
 
       test('hasLeftDistance', () {
-        final assertion = hasLeftDistance(input);
+        final assertion = hasLeftDistance(input) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.globalBounds,
@@ -587,7 +611,7 @@ void main() {
       });
 
       test('hasTopDistance', () {
-        final assertion = hasTopDistance(input);
+        final assertion = hasTopDistance(input) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.globalBounds,
@@ -597,7 +621,7 @@ void main() {
       });
 
       test('hasRightDistance', () {
-        final assertion = hasRightDistance(input);
+        final assertion = hasRightDistance(input) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.globalBounds,
@@ -607,7 +631,7 @@ void main() {
       });
 
       test('hasBottomDistance', () {
-        final assertion = hasBottomDistance(input);
+        final assertion = hasBottomDistance(input) as RelativePositionAssert;
         checkPosition(
           assertion,
           refersTo: PositionReference.globalBounds,
@@ -631,20 +655,23 @@ void main() {
         expect(assertion.height, height);
       }
 
-      test('hasRelativeSizeOf', () {
-        final assertion = hasRelativeSizeOf(input, input, id);
+      test('hasSize', () {
+        final assertion =
+            hasSize(input, input, compareTraitId: id) as RelativeSizeAssert;
 
         checkSize(assertion, traitId: id, width: input, height: input);
       });
 
-      test('hasRelativeWidthOf', () {
-        final assertion = hasRelativeWidthOf(input, id);
+      test('hasWidth', () {
+        final assertion =
+            hasWidth(input, compareTraitId: id) as RelativeSizeAssert;
 
         checkSize(assertion, traitId: id, width: input);
       });
 
-      test('hasRelativeHeightOf', () {
-        final assertion = hasRelativeHeightOf(input, id);
+      test('hasHeight', () {
+        final assertion =
+            hasHeight(input, compareTraitId: id) as RelativeSizeAssert;
 
         checkSize(assertion, traitId: id, height: input);
       });

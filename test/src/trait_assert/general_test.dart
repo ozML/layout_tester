@@ -109,7 +109,7 @@ void main() {
       const unknownWidget = throwsStateError;
 
       void checkRelation(
-        RelationAssert Function(double value) factory, {
+        TraitAssert Function(double value) factory, {
         double value = 0,
         TargetId targetId = const TargetId(type: Positioned),
         result = returnsNormally,
@@ -140,7 +140,7 @@ void main() {
 
       // Width
 
-      checkRelation(widthIsEqual, value: 10);
+      checkRelation((e) => widthIsEqual(e) as RelationAssert, value: 10);
       checkRelation(widthIsEqual, result: failedAssert);
       checkRelation(
         widthIsEqual,
